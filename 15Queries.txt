@@ -2,31 +2,35 @@
 
 "52 weeks of sales history"
 (52_weeks.sql)
-SELECT WEEK(OrderDateTime) AS Week, COUNT(*) as Total FROM orders GROUP BY Week;
+SELECT date_part('week', OrderDateTime) AS Week, COUNT(*) as Total FROM orders 
+GROUP BY Week
+order by Week;
 
 "Realistic Sales History"
 (realistic_sales.sql)
-SELECT HOUR(OrderDateTime) AS Hour, COUNT(*) as Total, SUM(Price) as totalMoney FROM orders GROUP BY Hour;
+SELECT date_part('day', OrderDateTime) as Day, date_part('hour', OrderDateTime) AS Hour, COUNT(*) as Total, SUM(Price) as totalMoney FROM orders 
+GROUP BY Day, Hour
+order by day, hour;
 
 "Vegetarian Options"
 (vegetarian.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMeat == FALSE;
+SELECT Name FROM items WHERE not ContainsMeat and price > 0;
 
 "Lactose-Free Options"
 (lactose_free.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE;
+SELECT Name FROM items where not ContainsMilk and price > 0;
 
 "Gluten-Free Options"
 (gluten_free.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsWheat == FALSE;
+SELECT Name FROM items where not ContainsWheat and price > 0;
 
 "Vegan Options"
 (vegan.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg == FALSE, ContainsMeat == FALSE;
+SELECT Name FROM items WHERE not ContainsMilk and not ContainsEggs and not containsMeat and price > 0;
 
 "All food items with <=500 calories"
 (low_cal.sql)
-SELECT Name FROM items WHERE  IsFood == TRUE, Calories <= 500;
+SELECT Name FROM items WHERE Calories <= 500 and price > 0;
 
 -----------------Simon's Queries---------------
 
