@@ -37,32 +37,37 @@ SELECT Name FROM items WHERE Calories <= 500 and price > 0;
 # ------------------ REQUIRED -------------
 
 # select row count from inventory
-select count(*) from items;
+select count(*) from items where calories > 0;
 
 # select top 10 sums of order total grouped by day in descending order by order total
-
-select sum(Price) as Total from orders
-group by Day(OrderDateTime)
+select date_part('day', OrderDateTime) as Day, sum(Price) as Total from orders
+group by Day
 order by sum(Price) desc
 limit 10;
 
 # -----------------------------------------
 
-# Low Calorie Orders
+# Morning Orders
 select * from orders
-where calories < 500;
+where date_part('hour', OrderDateTime) >= 6 and date_part('hour', OrderDateTime) <= 10;
 
 # Christmas Orders
 select * from orders
-where Day(OrderDateTime) = 25 and
-Month(OrderDateTime) = 12;
+where date_part('day', OrderDateTime) = 25 and
+date_part('month', OrderDateTime) = 12;
 
 #Get DAY, MONTH, and YEAR
-select OrderID, Day(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('day', OrderDateTime) as OrderDay from orders;
 
-select OrderID, Month(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('month', OrderDateTime) as OrderMonth from orders;
 
-select OrderID, Year(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('Year', OrderDateTime) as OrderYear from orders;
+
+# number 1 customer
+select customerid, sum(price) from orders
+group by customerid
+order by sum(price) desc
+limit 1;
 
 # Sort Orders by Price
 select * from orders
