@@ -74,6 +74,6 @@ select * from orders
 order by Price;
 
 # Join based on customers
-select * , c.name from orders o
+select * from orders o
 inner join customers c
 on o.customerid = c.id;
