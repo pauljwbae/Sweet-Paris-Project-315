@@ -24,4 +24,4 @@ SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg 
 
 "Low_Calories"
 (low_cal.sql)
-SELECT Name FROM items WHERE Calories <= 500;
+SELECT Name FROM items WHERE  IsFood == TRUE, Calories <= 500;
