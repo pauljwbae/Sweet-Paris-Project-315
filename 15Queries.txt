@@ -1,10 +1,10 @@
 "52 weeks of sales history"
 (52_weeks.sql)
-SELECT ...
+SELECT WEEK(OrderDateTime) AS Week, COUNT(*) as Total FROM orders GROUP BY Week;
 
 "Realistic Sales History"
 (realistic_sales.sql)
-SELECT ...
+SELECT HOUR(OrderDateTime) AS Hour, COUNT(*) as Total, SUM(Price) as totalMoney FROM orders GROUP BY Hour;
 
 "Vegetarian Options"
 (vegetarian.sql)
@@ -22,6 +22,6 @@ SELECT Name FROM items WHERE IsFood == TRUE, ContainsWheat == FALSE;
 (vegan.sql)
 SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg == FALSE, ContainsMeat == FALSE;
 
-"Low_Calories"
+"All food items with <=500 calories"
 (low_cal.sql)
 SELECT Name FROM items WHERE  IsFood == TRUE, Calories <= 500;
