@@ -10,23 +10,23 @@ customerUIDS = range(10000,20000)
 result = []
 #GENERATING DATES
 while dt < end:
-    secondsStep = datetime.timedelta(seconds=random.randint(9, 59))
+    #secondsStep = datetime.timedelta(seconds=random.randint(9, 59))
     
-    randNumOrders = random.randint(10, 20)
+    randNumOrders = random.randint(100, 200)
 
     if dt.date() == mothersDay:
-        randNumOrders = random.randint(20, 30)
+        randNumOrders = random.randint(200, 300)
         for i in range(randNumOrders):
             result.append(dt.strftime('%Y-%m-%d %H:%M:%S'))
 
     elif dt.date() == valentinesDay:
-        randNumOrders = random.randint(20, 30)
+        randNumOrders = random.randint(200, 300)
         for i in range(randNumOrders):
             result.append(dt.strftime('%Y-%m-%d %H:%M:%S'))
 
     for i in range(randNumOrders):
         result.append(dt.strftime('%Y-%m-%d %H:%M:%S'))
-        dt += secondsStep
+        #dt += secondsStep
     dt += step
 
 print(len(result))
