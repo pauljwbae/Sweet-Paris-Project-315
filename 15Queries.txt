@@ -1,0 +1,27 @@
+"52 weeks of sales history"
+(52_weeks.sql)
+SELECT ...
+
+"Realistic Sales History"
+(realistic_sales.sql)
+SELECT ...
+
+"Vegetarian Options"
+(vegetarian.sql)
+SELECT Name FROM items WHERE IsFood == TRUE, ContainsMeat == FALSE;
+
+"Lactose-Free Options"
+(lactose_free.sql)
+SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE;
+
+"Gluten-Free Options"
+(gluten_free.sql)
+SELECT Name FROM items WHERE IsFood == TRUE, ContainsWheat == FALSE;
+
+"Vegan Options"
+(vegan.sql)
+SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg == FALSE, ContainsMeat == FALSE;
+
+"Low_Calories"
+(low_cal.sql)
+SELECT Name FROM items WHERE Calories <= 500;
