@@ -1,3 +1,5 @@
+-----------------Kayla's Queries---------------
+
 "52 weeks of sales history"
 (52_weeks.sql)
 SELECT WEEK(OrderDateTime) AS Week, COUNT(*) as Total FROM orders GROUP BY Week;
@@ -25,3 +27,40 @@ SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg 
 "All food items with <=500 calories"
 (low_cal.sql)
 SELECT Name FROM items WHERE  IsFood == TRUE, Calories <= 500;
+
+-----------------Simon's Queries---------------
+
+# ------------------ REQUIRED -------------
+
+# select row count from inventory
+select count(*) from items;
+
+# select top 10 sums of order total grouped by day in descending order by order total
+
+select sum(Price) as Total from orders
+group by Day(OrderDateTime)
+order by sum(Price) desc
+limit 10;
+
+# -----------------------------------------
+
+# Low Calorie Orders
+select * from orders
+where calories < 500;
+
+# Christmas Orders
+select * from orders
+where Day(OrderDateTime) = 25 and
+Month(OrderDateTime) = 12;
+
+#Get DAY, MONTH, and YEAR
+select OrderID, Day(OrderDateTime) as OrderDay from orders;
+
+select OrderID, Month(OrderDateTime) as OrderDay from orders;
+
+select OrderID, Year(OrderDateTime) as OrderDay from orders;
+
+# Sort Orders by Price
+select * from orders
+order by Price;
+
