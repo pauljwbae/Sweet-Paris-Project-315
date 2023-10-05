@@ -2,65 +2,78 @@
 
 "52 weeks of sales history"
 (52_weeks.sql)
-SELECT WEEK(OrderDateTime) AS Week, COUNT(*) as Total FROM orders GROUP BY Week;
+SELECT date_part('week', OrderDateTime) AS Week, COUNT(*) as Total FROM orders 
+GROUP BY Week
+order by Week;
 
 "Realistic Sales History"
 (realistic_sales.sql)
-SELECT HOUR(OrderDateTime) AS Hour, COUNT(*) as Total, SUM(Price) as totalMoney FROM orders GROUP BY Hour;
+SELECT date_part('day', OrderDateTime) as Day, date_part('hour', OrderDateTime) AS Hour, COUNT(*) as Total, SUM(Price) as totalMoney FROM orders 
+GROUP BY Day, Hour
+order by day, hour;
 
 "Vegetarian Options"
 (vegetarian.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMeat == FALSE;
+SELECT Name FROM items WHERE not ContainsMeat and price > 0;
 
 "Lactose-Free Options"
 (lactose_free.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE;
+SELECT Name FROM items where not ContainsMilk and price > 0;
 
 "Gluten-Free Options"
 (gluten_free.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsWheat == FALSE;
+SELECT Name FROM items where not ContainsWheat and price > 0;
 
 "Vegan Options"
 (vegan.sql)
-SELECT Name FROM items WHERE IsFood == TRUE, ContainsMilk == FALSE, ContainsEgg == FALSE, ContainsMeat == FALSE;
+SELECT Name FROM items WHERE not ContainsMilk and not ContainsEggs and not containsMeat and price > 0;
 
 "All food items with <=500 calories"
 (low_cal.sql)
-SELECT Name FROM items WHERE  IsFood == TRUE, Calories <= 500;
+SELECT Name FROM items WHERE Calories <= 500 and price > 0;
 
 -----------------Simon's Queries---------------
 
 # ------------------ REQUIRED -------------
 
 # select row count from inventory
-select count(*) from items;
+select count(*) from items where calories > 0;
 
 # select top 10 sums of order total grouped by day in descending order by order total
-
-select sum(Price) as Total from orders
-group by Day(OrderDateTime)
+select date_part('day', OrderDateTime) as Day, sum(Price) as Total from orders
+group by Day
 order by sum(Price) desc
 limit 10;
 
 # -----------------------------------------
 
-# Low Calorie Orders
+# Morning Orders
 select * from orders
-where calories < 500;
+where date_part('hour', OrderDateTime) >= 6 and date_part('hour', OrderDateTime) <= 10;
 
 # Christmas Orders
 select * from orders
-where Day(OrderDateTime) = 25 and
-Month(OrderDateTime) = 12;
+where date_part('day', OrderDateTime) = 25 and
+date_part('month', OrderDateTime) = 12;
 
 #Get DAY, MONTH, and YEAR
-select OrderID, Day(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('day', OrderDateTime) as OrderDay from orders;
 
-select OrderID, Month(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('month', OrderDateTime) as OrderMonth from orders;
 
-select OrderID, Year(OrderDateTime) as OrderDay from orders;
+select OrderID, date_part('Year', OrderDateTime) as OrderYear from orders;
+
+# number 1 customer
+select customerid, sum(price) from orders
+group by customerid
+order by sum(price) desc
+limit 1;
 
 # Sort Orders by Price
 select * from orders
 order by Price;
 
+# Join based on customers
+select * from orders o
+inner join customers c
+on o.customerid = c.id;
