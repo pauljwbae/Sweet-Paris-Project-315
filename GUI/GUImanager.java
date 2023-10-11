@@ -8,8 +8,13 @@ public class GUImanager extends JFrame {
     private JTextField productIdField;
     private JTextField productNameField;
     private JTextField quantityField;
+    private JTextField itemNameField;
+    private JTextField priceField;
     private JButton loadButton;
     private JButton updateButton;
+    private JButton itemloadButton;
+    private JButton itemupdateButton;
+    private JButton itemaddButton;
     private Connection connection;
 
     public GUImanager() {
@@ -19,8 +24,14 @@ public class GUImanager extends JFrame {
         productIdField = new JTextField(10);
         productNameField = new JTextField(20);
         quantityField = new JTextField(5);
-        loadButton = new JButton("Load Data");
-        updateButton = new JButton("Update");
+        loadButton = new JButton("Load Data from Inventory");
+        updateButton = new JButton("Update Inventory");
+
+        itemNameField = new JTextField(10);
+        priceField = new JTextField(5);
+        itemloadButton = new JButton("Load Data from Item");
+        itemupdateButton = new JButton("Update Item");
+        // itemaddButton = new JButton("Add Item");
 
         // Create the database connection
         try {
@@ -47,6 +58,27 @@ public class GUImanager extends JFrame {
             }
         });
 
+        itemupdateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateItemData();
+            }
+        });
+
+        itemloadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadItemData();
+            }
+        });
+
+        // itemaddButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         addItemData();
+        //     }
+        // });
+
         // Create a panel to hold the components
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(new JLabel("Inventory ID:"));
@@ -57,6 +89,14 @@ public class GUImanager extends JFrame {
         panel.add(quantityField);
         panel.add(loadButton);
         panel.add(updateButton);
+
+        panel.add(new JLabel("Item Name:"));
+        panel.add(itemNameField);
+        panel.add(new JLabel("Price:"));
+        panel.add(priceField);
+        panel.add(itemloadButton);
+        panel.add(itemupdateButton);
+        // panel.add(itemaddButton);
 
         // Add the panel to the frame
         add(panel);
@@ -115,6 +155,81 @@ public class GUImanager extends JFrame {
             e.printStackTrace();
         }
     }
+
+    private void loadItemData() {
+        // Implement code to retrieve data from the "inventory" table and display it in the text fields.
+        String itemName = itemNameField.getText();
+
+        // System.out.println(itemName);
+
+        try {
+            String query = "SELECT price FROM items WHERE name = '"+ itemName + "'";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            // preparedStatement.setString(1, productID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                priceField.setText(resultSet.getString("price"));
+                // quantityField.setText(String.valueOf(resultSet.getInt("quantity")));
+            } else {
+                JOptionPane.showMessageDialog(this, "Product not found.");
+            }
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateItemData() {
+        // Implement code to update the "inventory" table with the data in the text fields.
+        String itemName = itemNameField.getText();
+        // int quantity = Integer.parseInt(quantityField.getText());
+        String priceString = priceField.getText();
+
+        // System.out.println(productID + " " + productName + " " + quantity);
+
+        try {
+            String updateQuery = "UPDATE items SET price = "+ priceString +" WHERE name = '" + itemName + "'";
+            PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+
+            int rowsUpdated = updateStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Item updated successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Product not found. No update performed.");
+            }
+
+            updateStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // private void addItemData() {
+    //     // Implement code to update the "inventory" table with the data in the text fields.
+    //     String itemName = itemNameField.getText();
+    //     // int quantity = Integer.parseInt(quantityField.getText());
+    //     String priceString = priceField.getText();
+
+    //     // System.out.println(productID + " " + productName + " " + quantity);
+
+    //     try {
+    //         String updateQuery = "insert into items table (itemid)";
+    //         PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+
+    //         int rowsUpdated = updateStatement.executeUpdate();
+    //         if (rowsUpdated > 0) {
+    //             JOptionPane.showMessageDialog(this, "Item updated successfully.");
+    //         } else {
+    //             JOptionPane.showMessageDialog(this, "Product not found. No update performed.");
+    //         }
+
+    //         updateStatement.close();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
