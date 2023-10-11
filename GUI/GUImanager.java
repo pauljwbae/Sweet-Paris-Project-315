@@ -10,7 +10,7 @@ import javax.swing.*;
   4) Add the new object to the JPanel p
 */
 
-public class GUI extends JFrame implements ActionListener {
+public class GUImanager extends JFrame implements ActionListener {
     static JFrame f;
 
     public static void main(String[] args)
