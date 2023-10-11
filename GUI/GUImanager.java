@@ -9,6 +9,7 @@ public class GUImanager extends JFrame {
     private JTextField productNameField;
     private JTextField quantityField;
     private JTextField itemNameField;
+    private JTextField itemIDField;
     private JTextField priceField;
     private JButton loadButton;
     private JButton updateButton;
@@ -28,10 +29,11 @@ public class GUImanager extends JFrame {
         updateButton = new JButton("Update Inventory");
 
         itemNameField = new JTextField(10);
+        itemIDField = new JTextField(10);
         priceField = new JTextField(5);
         itemloadButton = new JButton("Load Data from Item");
         itemupdateButton = new JButton("Update Item");
-        // itemaddButton = new JButton("Add Item");
+        itemaddButton = new JButton("Add Item");
 
         // Create the database connection
         try {
@@ -72,12 +74,12 @@ public class GUImanager extends JFrame {
             }
         });
 
-        // itemaddButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         addItemData();
-        //     }
-        // });
+        itemaddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addItemData();
+            }
+        });
 
         // Create a panel to hold the components
         JPanel panel = new JPanel(new FlowLayout());
@@ -89,14 +91,16 @@ public class GUImanager extends JFrame {
         panel.add(quantityField);
         panel.add(loadButton);
         panel.add(updateButton);
-
+        
+        panel.add(new JLabel("Item ID:"));
+        panel.add(itemIDField);
         panel.add(new JLabel("Item Name:"));
         panel.add(itemNameField);
         panel.add(new JLabel("Price:"));
         panel.add(priceField);
         panel.add(itemloadButton);
         panel.add(itemupdateButton);
-        // panel.add(itemaddButton);
+        panel.add(itemaddButton);
 
         // Add the panel to the frame
         add(panel);
@@ -206,35 +210,36 @@ public class GUImanager extends JFrame {
         }
     }
 
-    // private void addItemData() {
-    //     // Implement code to update the "inventory" table with the data in the text fields.
-    //     String itemName = itemNameField.getText();
-    //     // int quantity = Integer.parseInt(quantityField.getText());
-    //     String priceString = priceField.getText();
+    private void addItemData() {
+        // Implement code to update the "inventory" table with the data in the text fields.
+        String itemID = itemIDField.getText();
+        String itemName = itemNameField.getText();
+        // int quantity = Integer.parseInt(quantityField.getText());
+        String priceString = priceField.getText();
 
-    //     // System.out.println(productID + " " + productName + " " + quantity);
+        // System.out.println(productID + " " + productName + " " + quantity);
 
-    //     try {
-    //         String updateQuery = "insert into items table (itemid)";
-    //         PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+        try {
+            String updateQuery = "insert into items table (itemid, name, price) values ("+ itemID +", "+ itemName +", "+ priceString +")";
+            PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
 
-    //         int rowsUpdated = updateStatement.executeUpdate();
-    //         if (rowsUpdated > 0) {
-    //             JOptionPane.showMessageDialog(this, "Item updated successfully.");
-    //         } else {
-    //             JOptionPane.showMessageDialog(this, "Product not found. No update performed.");
-    //         }
+            int rowsUpdated = updateStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Item added successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Product not found. No add performed.");
+            }
 
-    //         updateStatement.close();
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+            updateStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             GUImanager app = new GUImanager();
-            app.setSize(400, 150);
+            app.setSize(1000, 150);
             app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             app.setVisible(true);
         });
