@@ -1,96 +1,79 @@
-import java.sql.*;
-import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 
-/*
-  TODO:
-  1) Change credentials for your own team's database
-  2) Change SQL command to a relevant query that retrieves a small amount of data
-  3) Create a JTextArea object using the queried data
-  4) Add the new object to the JPanel p
-*/
+public class GUImanager extends JFrame {
+    private JTextField productIdField;
+    private JTextField productNameField;
+    private JTextField quantityField;
+    private JButton loadButton;
+    private JButton updateButton;
+    private Connection connection;
 
-public class GUImanager extends JFrame implements ActionListener {
-    static JFrame f;
+    public GUImanager() {
+        super("Inventory Management");
 
-    public static void main(String[] args)
-    {
-      //Building the connection
-      Connection conn = null;
-      //TODO STEP 1 (see line 7)
-      String database_name = "csce315_970_03db";
-      String database_user = "csce315_970_03user";
-      String database_password = "fourfsd";
-      String database_url = String.format("jdbc:postgresql://csce-315-db.engr.tamu.edu/%s", database_name);
-      try {
-        conn = DriverManager.getConnection(database_url, database_user, database_password);
-      } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println(e.getClass().getName()+": "+e.getMessage());
-        System.exit(0);
-      }
-      JOptionPane.showMessageDialog(null,"Opened database successfully");
+        // Initialize the GUI components
+        productIdField = new JTextField(10);
+        productNameField = new JTextField(20);
+        quantityField = new JTextField(5);
+        loadButton = new JButton("Load Data");
+        updateButton = new JButton("Update");
 
-      String name = "";
-      try{
-        //create a statement object
-        Statement stmt = conn.createStatement();
-        //create a SQL statement
-        //TODO Step 2 (see line 8)
-        String sqlStatement = "select name from customers";
-        //send statement to DBMS
-        ResultSet result = stmt.executeQuery(sqlStatement);
-        while (result.next()) {
-          name += result.getString("name")+"\n";
+        // Create the database connection
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db", "csce315_970_03user", "fourfsd");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-      } catch (Exception e){
-        JOptionPane.showMessageDialog(null,"Error accessing Database.");
-      }
-      // create a new frame
-      f = new JFrame("DB GUI");
 
-      // create a object
-      GUI s = new GUI();
+        // Add action listeners to the buttons
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadInventoryData();
+            }
+        });
 
-      // create a panel
-      JPanel p = new JPanel();
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateInventoryData();
+            }
+        });
 
-      JButton b = new JButton("Close");
+        // Create a panel to hold the components
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.add(new JLabel("Product ID:"));
+        panel.add(productIdField);
+        panel.add(new JLabel("Product Name:"));
+        panel.add(productNameField);
+        panel.add(new JLabel("Quantity:"));
+        panel.add(quantityField);
+        panel.add(loadButton);
+        panel.add(updateButton);
 
-      // add actionlistener to button
-      b.addActionListener(s);
-
-      //TODO Step 3 (see line 9)
-      
-
-      //TODO Step 4 (see line 10)
-
-      // add button to panel
-      p.add(b);
-
-      // add panel to frame
-      f.add(p);
-
-      // set the size of frame
-      f.setSize(400, 400);
-
-      f.setVisible(true);
-
-      //closing the connection
-      try {
-        conn.close();
-        JOptionPane.showMessageDialog(null,"Connection Closed.");
-      } catch(Exception e) {
-        JOptionPane.showMessageDialog(null,"Connection NOT Closed.");
-      }
+        // Add the panel to the frame
+        add(panel);
     }
 
-    // if button is pressed
-    public void actionPerformed(ActionEvent e)
-    {
-        String s = e.getActionCommand();
-        if (s.equals("Close")) {
-            f.dispose();
-        }
+    private void loadInventoryData() {
+        // Implement code to retrieve data from the "inventory" table and display it in the text fields.
+    }
+
+    private void updateInventoryData() {
+        // Implement code to update the "inventory" table with the data in the text fields.
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            GUImanager app = new GUImanager();
+            app.setSize(400, 150);
+            app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            app.setVisible(true);
+        });
     }
 }
