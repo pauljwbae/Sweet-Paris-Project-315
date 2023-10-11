@@ -65,16 +65,17 @@ public class GUImanager extends JFrame {
     private void loadInventoryData() {
         // Implement code to retrieve data from the "inventory" table and display it in the text fields.
         String productID = productIdField.getText();
+        String productName = productNameField.getText();
 
         try {
-            String query = "SELECT * FROM inventory WHERE id = "+ productID;
+            String query = "SELECT "+ productName +" FROM inventory WHERE id = "+ productID;
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             // preparedStatement.setString(1, productID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                productNameField.setText(resultSet.getString("product_name"));
-                quantityField.setText(String.valueOf(resultSet.getInt("quantity")));
+                quantityField.setText(resultSet.getString(productName));
+                // quantityField.setText(String.valueOf(resultSet.getInt("quantity")));
             } else {
                 JOptionPane.showMessageDialog(this, "Product not found.");
             }
