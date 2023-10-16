@@ -1,0 +1,21 @@
+ID,Name,Phone Number,Hourly Pay,Start Time,End Time,Next Work Day,Position,Manager,Password
+11111,Genevieve Cheona,5126357384,12.25,08:00:00,12:00:00,2023-10-07,cashier,Katharina Johnson,11111
+11112,Zendaya Anderson,7849364726,12.25,08:00:00,12:00:00,2023-10-07,cashier,Katharina Johnson,11111
+11113,Shauna Akpabio,2938743627,12.25,08:00:00,12:00:00,2023-10-07,server,Katharina Johnson,22222
+11114,Zendaya Anderson,2837472635,12.25,08:00:00,12:00:00,2023-10-08,server,Katharina Johnson,22222
+11115,Genevieve Lenkov,2837463789,12.25,08:00:00,12:00:00,2023-10-07,server,Katharina Johnson,22222
+11116,Elisa O’Reilly,4985783740,12.5,08:00:00,12:00:00,2023-10-07,cashier,Katharina Johnson,11111
+11117,Famke Bianchi,8390465278,12.25,12:00:00,04:00:00,2023-10-07,cook,Katharina Johnson,33333
+11118,Ansley Lenkov,6284785987,12.5,12:00:00,04:00:00,2023-10-08,cook,Katharina Johnson,33333
+11119,Kavya Zhào,8376458299,12.5,12:00:00,04:00:00,2023-10-07,cook,Katharina Johnson,33333
+11120,Katharina Johnson,4673892546,12.75,07:00:00,01:00:00,2023-10-07,manager,NULL,66666
+11121,Sadhbh Agrinya,1645378967,12.5,12:00:00,04:00:00,2023-10-07,server,Zauqi Apeldoorn,22222
+11122,Carolos Ailana,4673562937,12.25,12:00:00,04:00:00,2023-10-07,server,Zauqi Apeldoorn,22222
+11123,Lana Johnson,8937462948,12.25,04:00:00,07:00:00,2023-10-08,busser,Zauqi Apeldoorn,44444
+11124,Faizan Ailana,7469384736,12.25,04:00:00,07:00:00,2023-10-07,busser,Zauqi Apeldoorn,44444
+11125,Kira Semenov,2938475638,12.25,04:00:00,07:00:00,2023-10-07,busser,Zauqi Apeldoorn,44444
+11126,Kavya Baros,1837467382,12.25,04:00:00,07:00:00,2023-10-07,busser,Zauqi Apeldoorn,44444
+11127,Gilbert Abdul,6378492846,12.25,04:00:00,07:00:00,2023-10-08,barista,Zauqi Apeldoorn,55555
+11128,Eoin Ai’la’ausd,6749283746,12.5,04:00:00,07:00:00,2023-10-07,barista,Zauqi Apeldoorn,55555
+11129,Louis Daly,2018374659,12.75,01:00:00,07:00:00,2023-10-07,manager,NULL,66666
+11130,Zauqi Apeldoorn,9827364829,12.25,04:00:00,07:00:00,2023-10-07,barista,Zauqi Apeldoorn,55555
