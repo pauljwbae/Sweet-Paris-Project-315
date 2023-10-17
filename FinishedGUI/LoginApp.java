@@ -10,10 +10,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Represents a simple login application for a POS (Point of Sale) system.
+ */
 public class LoginApp extends JFrame {
     private JTextField idField;
     private JTextField passwordField;
 
+    /**
+     * Constructs the LoginApp GUI.
+     */
     public LoginApp() {
         setTitle("Login Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,9 +30,8 @@ public class LoginApp extends JFrame {
         // Create a welcome message as a JLabel
         JLabel welcomeLabel = new JLabel("Welcome to SWEET PARIS POS");
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial",Font.BOLD, 25));
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 25));
         welcomeLabel.setBorder(new EmptyBorder(20, 0, 30, 0));
-
 
         JPanel loginPanel = new JPanel(new GridLayout(3, 2));
 
@@ -39,36 +44,38 @@ public class LoginApp extends JFrame {
 
         JButton loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
+            /**
+             * Handles the login button click event.
+             * @param e The action event.
+             */
             public void actionPerformed(ActionEvent e) {
                 String id = idField.getText();
                 String password = passwordField.getText();
 
                 try {
-                    // System.out.println(id + " " + password);
-                    Connection connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db", "csce315_970_03user", "fourfsd");
-                    String query = "SELECT position, name FROM employees WHERE id = "+id+" AND password = '"+password+"'";
+                    Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    );
+                    String query = "SELECT position, name FROM employees WHERE id = " + id + " AND password = '" + password + "'";
                     PreparedStatement statement = connection.prepareStatement(query);
-
                     ResultSet resultSet = statement.executeQuery();
 
                     if (resultSet.next()) {
-                        // JOptionPane.showMessageDialog(null, "Login successful!");
-                        if (resultSet.getString(1) == "manager") {
-                            // dispose();
-                            // doManager();
-                        }
-                        else {
+                        // System.out.print(resultSet.getString(2));
+                        if ("manager".equals(resultSet.getString(1))) {
+                            dispose();
+                            doManager(resultSet.getString(2));
+                        } else {
                             dispose();
                             doCashier(resultSet.getString(2));
                         }
-
-
                     } else {
                         JOptionPane.showMessageDialog(null, "Login failed. Invalid credentials.");
                         idField.setText("");
                         passwordField.setText("");
                     }
-
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "An error occurred while processing your request.");
@@ -92,17 +99,27 @@ public class LoginApp extends JFrame {
         setVisible(true);
     }
 
-    // Create and open the POS page
+    /**
+     * Create and open the Cashier GUI.
+     * @param name The name of the user.
+     */
     private void doCashier(String name) {
-        CashierGUI cashier = new CashierGUI(name);
-        cashier.setVisible(true);
+        // CashierGUI cashier = new CashierGUI(name);
+        // cashier.setVisible(true);
     }
 
-    private void doManager() {
-        ManagerGUI manager = new ManagerGUI();
-        manager.setVisible(true);
+    /**
+     * Create and open the Manager GUI.
+     * @param name The name of the user.
+     */
+    private void doManager(String name) {
+        ManagerGUI manager = new ManagerGUI(name);
     }
 
+    /**
+     * The main entry point of the application.
+     * @param args The command-line arguments.
+     */
     public static void main(String[] args) {
         // Load the PostgreSQL JDBC driver
         try {
