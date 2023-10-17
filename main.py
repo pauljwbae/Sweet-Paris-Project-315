@@ -2,7 +2,8 @@ import random
 import datetime
 dt = datetime.datetime(2022, 1, 1)
 end = datetime.datetime(2023, 8, 3)
-step = datetime.timedelta(days = 1, hours = 1)
+#step = datetime.timedelta(days = 1, hours = 1)
+step = datetime.timedelta(days = 1)
 mothersDay = datetime.date(2023, 5, 12)
 valentinesDay = datetime.date(2023, 2, 14)
 customerUIDS = range(10000,20000)
@@ -12,15 +13,19 @@ result = []
 while dt < end:
     #secondsStep = datetime.timedelta(seconds=random.randint(9, 59))
     
-    randNumOrders = random.randint(100, 200)
-
+    #randNumOrders = random.randint(100, 200)
+    randNumOrders = 1
     if dt.date() == mothersDay:
-        randNumOrders = random.randint(200, 300)
+        #randNumOrders = random.randint(200, 300)
+        randNumOrders = 1
+        
         for i in range(randNumOrders):
             result.append(dt.strftime('%Y-%m-%d %H:%M:%S'))
 
     elif dt.date() == valentinesDay:
-        randNumOrders = random.randint(200, 300)
+        #randNumOrders = random.randint(200, 300)
+        randNumOrders = 1
+        
         for i in range(randNumOrders):
             result.append(dt.strftime('%Y-%m-%d %H:%M:%S'))
 
@@ -32,11 +37,12 @@ while dt < end:
 print(len(result))
 
 #WRITING FILE
-file = open("52weeks.csv", 'w')
+file = open("400orders.csv", 'w')
 #orderid(int), ordertime (datetime), customerid(int), price(double), calories(int)
 file.write("OrderID,OrderDateTime,CustomerID,Price,Calories\n")
 totalMoney = 0.0
 orderID = 1
+
 for date in result:
     price = round(random.uniform(5.0, 50.0),2)
     totalMoney += price
