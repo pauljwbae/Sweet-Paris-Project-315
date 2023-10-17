@@ -104,8 +104,7 @@ public class LoginApp extends JFrame {
      * @param name The name of the user.
      */
     private void doCashier(String name) {
-        // CashierGUI cashier = new CashierGUI(name);
-        // cashier.setVisible(true);
+        new CashierGUI(name);
     }
 
     /**
