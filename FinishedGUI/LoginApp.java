@@ -46,13 +46,23 @@ public class LoginApp extends JFrame {
                 try {
                     // System.out.println(id + " " + password);
                     Connection connection = DriverManager.getConnection("jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db", "csce315_970_03user", "fourfsd");
-                    String query = "SELECT position FROM employees WHERE id = "+id+" AND password = '"+password+"'";
+                    String query = "SELECT position, name FROM employees WHERE id = "+id+" AND password = '"+password+"'";
                     PreparedStatement statement = connection.prepareStatement(query);
 
                     ResultSet resultSet = statement.executeQuery();
 
                     if (resultSet.next()) {
-                        JOptionPane.showMessageDialog(null, "Login successful!");
+                        // JOptionPane.showMessageDialog(null, "Login successful!");
+                        if (resultSet.getString(1) == "manager") {
+                            // dispose();
+                            // doManager();
+                        }
+                        else {
+                            dispose();
+                            doCashier(resultSet.getString(2));
+                        }
+
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Login failed. Invalid credentials.");
                         idField.setText("");
@@ -68,19 +78,6 @@ public class LoginApp extends JFrame {
             }
         });
 
-        // Create and open the POS page
-        private void doCashier(String username) {
-            String actualName = userToNameMap.get(username);
-            POSCashier cashier = new POSCashier(actualName);
-            cashier.setVisible(true);
-        }
-
-        private void doManager() {
-            ManagerNavigation manager = new ManagerNavigation();
-            manager.setVisible(true);
-        }
-
-
         loginPanel.add(idLabel);
         loginPanel.add(idField);
         loginPanel.add(passwordLabel);
@@ -94,6 +91,17 @@ public class LoginApp extends JFrame {
 
         setVisible(true);
     }
+
+    // Create and open the POS page
+    private void doCashier(String name) {
+        CashierGUI cashier = new CashierGUI(name);
+        cashier.setVisible(true);
+    }
+
+    // private void doManager() {
+    //     ManagerNavigation manager = new ManagerNavigation();
+    //     manager.setVisible(true);
+    // }
 
     public static void main(String[] args) {
         // Load the PostgreSQL JDBC driver
