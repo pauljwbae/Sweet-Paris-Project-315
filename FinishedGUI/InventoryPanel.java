@@ -14,6 +14,7 @@ class InventoryPanel extends JPanel {
     private JComboBox<String> productDropdown;
     private JTextField quantityField;
     private JButton updateButton;
+    private JButton refresh;
 
     public InventoryPanel() {
         // Create a new table model
@@ -37,11 +38,15 @@ class InventoryPanel extends JPanel {
         productDropdown = new JComboBox<>();
         quantityField = new JTextField(5);
         updateButton = new JButton("Update Inventory");
+        refresh = new JButton("Refresh");
 
         // Add components to the update inventory panel
         updateInventoryPanel.add(productDropdown);
         updateInventoryPanel.add(quantityField);
         updateInventoryPanel.add(updateButton);
+        updateInventoryPanel.add(refresh);
+
+        refresh.addActionListener(e -> {tableModel.setRowCount(0); fetchDataFromDatabase(tableModel);});
         
         updateButton.addActionListener(e -> {
             // Handle inventory update here

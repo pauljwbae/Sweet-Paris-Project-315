@@ -10,9 +10,9 @@ public class ManagerGUI {
     private JPanel currentFrame;
 
     public ManagerGUI(String userName) {
-        mainFrame = new JFrame("POS Manager System");
+        mainFrame = new JFrame("Sweet Paris Manager System");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(800, 600);
+        mainFrame.setSize(1000, 600);
         mainFrame.setLayout(new BorderLayout());
 
         welcomeLabel = new JLabel("Welcome, " + userName);
@@ -26,8 +26,8 @@ public class ManagerGUI {
         addButton("Sales Report", new SalesPanel());
         addButton("Excess Report", new InventoryPanel());
         addButton("Product Usage Chart", new ReportsPanel());
-        addButton("Restock Report", new SettingsPanel());
-        addButton("Update Items", new SettingsPanel());
+        addButton("Restock Report", new RestockRep());
+        addButton("Update Items", new NewSeasonal());
         addButton("Ordering Trend Report", new SettingsPanel());
         addButton("Popularity Analysis", new SettingsPanel());
 

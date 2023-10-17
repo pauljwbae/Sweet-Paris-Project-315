@@ -23,7 +23,7 @@ public class LoginApp extends JFrame {
     public LoginApp() {
         setTitle("Login Page");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
+        setSize(500, 200);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -31,7 +31,7 @@ public class LoginApp extends JFrame {
         JLabel welcomeLabel = new JLabel("Welcome to SWEET PARIS POS");
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        welcomeLabel.setBorder(new EmptyBorder(20, 0, 30, 0));
+        welcomeLabel.setBorder(new EmptyBorder(20, 15, 30,15));
 
         JPanel loginPanel = new JPanel(new GridLayout(3, 2));
 
