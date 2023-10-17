@@ -1,0 +1,1 @@
+SELECT itemName, numInStock FROM inventory WHERE numInStock < minimumStock

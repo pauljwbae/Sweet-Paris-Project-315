@@ -1,0 +1,2 @@
+INSERT INTO items (ItemId, Name, ContainsWheat,ContainsMilk,ContainsEggs,ContainsMeat,ContainsAlcohol,Price,Calories,Drink,Food)
+VALUES (27, 'Pumpkin Spice Latte', false, true, false, false, false, 6.00, 400, true, false)
