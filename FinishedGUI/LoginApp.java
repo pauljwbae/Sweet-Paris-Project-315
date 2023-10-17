@@ -98,10 +98,10 @@ public class LoginApp extends JFrame {
         cashier.setVisible(true);
     }
 
-    // private void doManager() {
-    //     ManagerNavigation manager = new ManagerNavigation();
-    //     manager.setVisible(true);
-    // }
+    private void doManager() {
+        ManagerGUI manager = new ManagerGUI();
+        manager.setVisible(true);
+    }
 
     public static void main(String[] args) {
         // Load the PostgreSQL JDBC driver
