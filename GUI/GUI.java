@@ -77,10 +77,11 @@ public class GUI extends JFrame implements ActionListener {
 //       //TODO Step 3 (see line 9)
       
 
-//       //TODO Step 4 (see line 10)
+      //TODO Step 4 (see line 10)
+      
 
-//       // add button to panel
-//       p.add(b);
+      // add button to panel
+      p.add(b);
 
 //       // add panel to frame
 //       f.add(p);
