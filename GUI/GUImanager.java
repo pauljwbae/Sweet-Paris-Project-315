@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
+/**
+ * 
+ * @author Paul Bae, Kayla Fincher, Simon Vadarahaj, Sarika Venkat
+ */
 public class GUImanager extends JFrame {
     private JTextField productIdField;
     private JTextField productNameField;
@@ -18,6 +22,9 @@ public class GUImanager extends JFrame {
     private JButton itemaddButton;
     private Connection connection;
 
+    /**
+    * 
+    */
     public GUImanager() {
         super("SWEET PARIS POS FOR MANAGERS");
 
