@@ -24,12 +24,12 @@ public class ManagerGUI {
         // Add buttons to the menu panel
         addButton("Inventory", new InventoryPanel()); 
         addButton("Sales Report", new SalesPanel());
-        addButton("Excess Report", new InventoryPanel());
+        addButton("Excess Report", new ExcessRep());
         addButton("Product Usage Chart", new ReportsPanel());
         addButton("Restock Report", new RestockRep());
         addButton("Update Items", new NewSeasonal());
         addButton("Ordering Trend Report", new SettingsPanel());
-        addButton("Popularity Analysis", new SettingsPanel());
+        addButton("Popularity Analysis", new Popularity());
 
         mainFrame.add(menuPanel, BorderLayout.WEST);
 
