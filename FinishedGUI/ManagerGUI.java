@@ -23,9 +23,9 @@ public class ManagerGUI {
 
         // Add buttons to the menu panel
         addButton("Inventory", new InventoryPanel()); 
-        addButton("Sales Report", new SalesPanel());
+        addButton("Sales Report", new SalesRep());
         addButton("Excess Report", new ExcessRep());
-        addButton("Product Usage Chart", new ReportsPanel());
+        addButton("Product Usage Chart", new ProdUseChart());
         addButton("Restock Report", new RestockRep());
         addButton("Update Items", new NewSeasonal());
         addButton("Ordering Trend Report", new SettingsPanel());
@@ -57,11 +57,6 @@ public class ManagerGUI {
     }
 }
 
-class SalesPanel extends JPanel {
-    public SalesPanel() {
-        // Add components specific to the Sales panel here
-    }
-}
 
 class ReportsPanel extends JPanel {
     public ReportsPanel() {
