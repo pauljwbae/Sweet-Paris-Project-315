@@ -126,12 +126,12 @@ public class ProdUseChart extends JPanel {
                             "fourfsd"
                     );
             Statement stmt = connection.createStatement();
-            String query = "SELECT orderitems.order_id, SUM(orderitems.quantity) AS total_inventory FROM orders INNER JOIN orderitems ON orders.orderid = orderitems.order_id where orders.orderdatetime between '"+startDate+" 00:00:00' and '"+endDate+" 23:59:59' GROUP BY orderitems.order_id order by  orderitems.order_id";
+            String query = "SELECT orderitems.item_name, SUM(orderitems.quantity) AS total_sold FROM orders  INNER JOIN orderitems ON orders.orderid = orderitems.order_id where orders.orderdatetime between '"+startDate+" 00:00:00' and '"+endDate+" 23:59:59' GROUP BY orderitems.item_name order by orderitems.item_name";
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                String productName = rs.getString("order_id");
-                int quantitySold = rs.getInt("total_inventory");
+                String productName = rs.getString("item_name");
+                int quantitySold = rs.getInt("total_sold");
                 tableModel.addRow(new Object[]{productName, quantitySold});
             }
 
