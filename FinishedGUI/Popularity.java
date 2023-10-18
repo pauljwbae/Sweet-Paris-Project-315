@@ -12,12 +12,13 @@ import java.util.Vector;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * The `Popularity` class represents a JPanel for displaying popular products based on sales data.
- * It provides the ability to select a date range and retrieve sales data within that range.
- * 
- * The class contains a JTable to display the product names and quantities sold, as well as
- * components for selecting a date range and a "Submit" button to update the displayed data.
+ * A JPanel that displays a table of sales data and allows the user to select a date range to view sales data for.
+ * The panel contains a JTable, JComboBoxes for selecting start and end dates, and a submit button to retrieve data for the selected date range.
+ * The sales data is fetched from a PostgreSQL database using JDBC and displayed in the table.
+ * The fetchDataFromDatabase method retrieves the sales data from the database and populates the table model with the data.
+ * The date selection and data retrieval logic is handled in the submitButton's ActionListener.
  */
 public class Popularity extends JPanel {
     private JTable salesTable;

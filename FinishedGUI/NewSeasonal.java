@@ -10,6 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+
+/**
+ * This class represents a JPanel that displays a JTable of items fetched from a database.
+ * It also provides buttons to update the price of an item, add a new item, and delete an item.
+ * The table can be refreshed to display the latest data from the database.
+ * The class fetches data from a PostgreSQL database using JDBC driver.
+ * The class uses DefaultTableModel to populate the JTable with data.
+ */
 public class NewSeasonal extends JPanel {
     private JTable itemsTable;
     private JButton updatePriceButton;
@@ -17,6 +25,12 @@ public class NewSeasonal extends JPanel {
     private JButton deleteItemButton;
     private JButton refresh;
 
+    /**
+     * This class represents a GUI for displaying and managing seasonal items.
+     * It contains a JTable to display the items, and buttons to perform operations such as updating the price, adding an item, and deleting an item.
+     * The table is populated by fetching data from a database using the fetchDataFromDatabase() method.
+     * The class also includes action listeners for the buttons to perform the necessary operations.
+     */
     public NewSeasonal() {
         DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -63,6 +77,11 @@ public class NewSeasonal extends JPanel {
         deleteItemButton.addActionListener(e -> deleteItem());
     }
 
+    /**
+     * Fetches data from the database and populates the given table model with the retrieved data.
+     * 
+     * @param tableModel the table model to populate with the retrieved data
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel) {
         // Fetch data from the database and populate the table here
         // You should replace the example below with actual database retrieval code
@@ -98,6 +117,11 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * Displays a dialog box to update the price of an item selected from a dropdown list.
+     * The dialog box contains a dropdown list of items and a text field to enter the new price.
+     * If the user clicks OK, the selected item's price is updated in the database and the table is refreshed.
+     */
     private void showUpdatePriceDialog() {
         JComboBox<String> itemDropdown = new JComboBox<>();
         JTextField priceField = new JTextField(10);
@@ -133,6 +157,12 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * Updates the price of a selected item in the database.
+     * 
+     * @param selectedItem the name of the item to update
+     * @param newPrice the new price of the item
+     */
     private void updateItemPrice(String selectedItem, String newPrice) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -159,6 +189,10 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * Updates the inventory by inserting a new row with a quantity of 100 into the inventory table of the database.
+     * Displays a success message if the update is successful, or a failure message if it fails.
+     */
     private void updateInventory() {
         try {
             Connection connection = DriverManager.getConnection(
@@ -185,6 +219,11 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * Deletes inventory from the database by inserting a new row with a quantity of 100.
+     * Displays a success message if the update was successful, or an error message if it failed.
+     * @throws SQLException if there is an error with the database connection or query execution.
+     */
     private void deleteInventory() {
         try {
             Connection connection = DriverManager.getConnection(
@@ -211,6 +250,13 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * This method creates a panel for entering item details and inserts a new item into the database.
+     * It retrieves values from the input fields and checkboxes, and uses a PreparedStatement to insert a new item into the database.
+     * If the item is added successfully, it displays a success message and updates the inventory.
+     * If the item fails to be added, it displays an error message.
+     * Finally, it refreshes the items table to display the new item.
+     */
     private void addItem() {
         // Create a panel for entering item details
         JPanel addItemPanel = new JPanel();
@@ -301,6 +347,13 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * This method deletes the selected item from the itemsTable and the database.
+     * If no item is selected, it displays a message asking the user to select an item.
+     * If the user confirms the deletion, it deletes the item from the database and the table.
+     * If the deletion is successful, it displays a message indicating the success.
+     * If the deletion fails, it displays a message indicating the failure.
+     */
     private void deleteItem() {
         int selectedRow = itemsTable.getSelectedRow();
     
@@ -343,6 +396,13 @@ public class NewSeasonal extends JPanel {
         }
     }
 
+    /**
+     * This method is used to fit the column widths of a JTable based on the preferred width of the contents in each cell.
+     * It iterates through each column and row of the table, gets the preferred width of the cell contents, and sets the
+     * preferred width of the column to the maximum preferred width of all the cells in that column.
+     * 
+     * @param table The JTable for which the column widths need to be adjusted.
+     */
     private void fitColumnWidths(JTable table) {
         for (int column = 0; column < table.getColumnCount(); column++) {
             int maxwidth = 0;

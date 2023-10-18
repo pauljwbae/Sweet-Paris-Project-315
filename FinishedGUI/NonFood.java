@@ -8,27 +8,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Represents a panel for selecting non-food items (e.g., merchandise) for orders.
+ */
 public class NonFood extends JPanel {
     private OrdersPanel ordersPanel;
 
+    /**
+     * Constructs a NonFood panel.
+     *
+     * @param ordersPanel The OrdersPanel for managing selected items.
+     */
     public NonFood(OrdersPanel ordersPanel) {
         this.ordersPanel = ordersPanel;
         setLayout(new GridLayout(0, 3)); // 3 columns for buttons, adjust as needed
 
-        // Fetch item data from the database and create buttons
-        fetchItemsAndCreateButtons();
+        // Fetch non-food items from the database and create buttons
+        fetchNonFoodItemsAndCreateButtons();
 
         int marginSize = 10; // Adjust the margin size as needed
         setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
     }
 
-    private void fetchItemsAndCreateButtons() {
+    /**
+     * Fetches non-food items from the database and creates buttons for each item.
+     */
+    private void fetchNonFoodItemsAndCreateButtons() {
         try {
             Connection connection = DriverManager.getConnection(
-                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
-                            "csce315_970_03user",
-                            "fourfsd"
-                    );
+                    "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                    "csce315_970_03user",
+                    "fourfsd"
+            );
 
             String query = "SELECT name FROM items where not food and not drink";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -37,7 +48,7 @@ public class NonFood extends JPanel {
             while (resultSet.next()) {
                 String itemName = resultSet.getString("name");
                 JButton itemButton = new JButton(itemName);
-                
+
                 Insets margins = new Insets(10, 10, 10, 10); // Top, left, bottom, right margins
                 itemButton.setMargin(margins);
 
@@ -64,6 +75,12 @@ public class NonFood extends JPanel {
         }
     }
 
+    /**
+     * Prompts the user to enter a quantity for the selected non-food item.
+     *
+     * @param itemName The name of the selected non-food item.
+     * @return The quantity entered by the user, or -1 if the input is invalid.
+     */
     private int askForQuantity(String itemName) {
         String input = JOptionPane.showInputDialog("Enter quantity for " + itemName + ":");
         try {
@@ -73,5 +90,4 @@ public class NonFood extends JPanel {
             return -1;
         }
     }
-
 }

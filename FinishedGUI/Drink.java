@@ -8,9 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Represents a panel for selecting drink items.
+ */
 public class Drink extends JPanel {
     private OrdersPanel ordersPanel;
 
+    /**
+     * Constructs a Drink panel.
+     *
+     * @param ordersPanel The OrdersPanel for managing selected items.
+     */
     public Drink(OrdersPanel ordersPanel) {
         this.ordersPanel = ordersPanel;
         setLayout(new GridLayout(0, 3)); // 3 columns for buttons, adjust as needed
@@ -22,6 +30,9 @@ public class Drink extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
     }
 
+    /**
+     * Fetches drink items from the database and creates buttons for each item.
+     */
     private void fetchItemsAndCreateButtons() {
         try {
             Connection connection = DriverManager.getConnection(
@@ -37,7 +48,7 @@ public class Drink extends JPanel {
             while (resultSet.next()) {
                 String itemName = resultSet.getString("name");
                 JButton itemButton = new JButton(itemName);
-                
+
                 Insets margins = new Insets(10, 10, 10, 10); // Top, left, bottom, right margins
                 itemButton.setMargin(margins);
 
@@ -64,6 +75,12 @@ public class Drink extends JPanel {
         }
     }
 
+    /**
+     * Prompts the user to enter a quantity for the selected item.
+     *
+     * @param itemName The name of the selected item.
+     * @return The quantity entered by the user, or -1 if the input is invalid.
+     */
     private int askForQuantity(String itemName) {
         String input = JOptionPane.showInputDialog("Enter quantity for " + itemName + ":");
         try {
@@ -73,5 +90,4 @@ public class Drink extends JPanel {
             return -1;
         }
     }
-
 }
