@@ -2,10 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 class OrdersPanel extends JPanel {
     private DefaultTableModel orderTableModel;
@@ -73,6 +80,11 @@ class OrdersPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Implement order submission logic here
+                double price = getPrice();
+                int calories = getCals();
+                insertOrderIntoDatabase(11111, price, calories);
+                insertOrderItemsIntoDatabase(getHighestOrderID());
+                orderTableModel.setRowCount(0); 
             }
         });
         add(submitButton, BorderLayout.SOUTH);
@@ -94,7 +106,178 @@ class OrdersPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a number.");
         }
     }
+    
+    private double getPrice() {
+        double price = 0;
+        try {
+            Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    );
 
+            int rowCount = orderTableModel.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String itemName = (String) orderTableModel.getValueAt(i, 0);
+                int quantity = (int) orderTableModel.getValueAt(i, 1);
+                        
+                // Construct and execute a query for each row
+                String query = "SELECT price FROM items WHERE name = '" + itemName + "'";
+                        
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    // preparedStatement.setString(1, itemName);
+                    // preparedStatement.setInt(2, quantity);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            // Handle the query results as needed
+                            double result = resultSet.getDouble("price");
+                            price += (result * quantity);
+
+                            // System.out.println("Query " + (i + 1) + " Result: " + result);
+                        }
+                    }
+                }
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // System.out.println("Price: "+price);
+        return price;
+    }
+
+    private int getCals() {
+        int calories = 0;
+        try {
+            Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    );
+
+            int rowCount = orderTableModel.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String itemName = (String) orderTableModel.getValueAt(i, 0);
+                int quantity = (int) orderTableModel.getValueAt(i, 1);
+                        
+                // Construct and execute a query for each row
+                String query = "SELECT calories FROM items WHERE name = '" + itemName + "'";
+                        
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    // preparedStatement.setString(1, itemName);
+                    // preparedStatement.setInt(2, quantity);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            // Handle the query results as needed
+                            int result = resultSet.getInt("calories");
+                            calories += (result * quantity);
+
+                            // System.out.println("Query " + (i + 1) + " Result: " + result);
+                        }
+                    }
+                }
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // System.out.println("Price: "+calories);
+        return calories;
+    }
+
+    private int insertOrderItemsIntoDatabase(int orderid) {
+        int calories = 0;
+        try {
+            Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    );
+
+            int rowCount = orderTableModel.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String itemName = (String) orderTableModel.getValueAt(i, 0);
+                int quantity = (int) orderTableModel.getValueAt(i, 1);
+                        
+                // Construct and execute a query for each row
+                String query = "INSERT INTO orderitems (order_id, item_name, quantity) VALUES (?, ?, ?)";
+                        
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setInt(1, orderid);
+                    preparedStatement.setString(2, itemName);
+                    preparedStatement.setInt(3, quantity);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        while (resultSet.next()) {
+                            // Handle the query results as needed
+                            int result = resultSet.getInt("calories");
+                            calories += (result * quantity);
+
+                            // System.out.println("Query " + (i + 1) + " Result: " + result);
+                        }
+                    }
+                }
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // System.out.println("Price: "+calories);
+        return calories;
+    }
+    
+    
+    private void insertOrderIntoDatabase(int customerid, double price, int calories) {
+        // Replace these values with your actual database connection details
+        try (Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    )) {
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(currentDateTime);
+            String query = "INSERT INTO orders (orderdatetime, customerid, price, calories) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setTimestamp(1, timestamp);
+                preparedStatement.setInt(2, customerid);
+                preparedStatement.setDouble(3, price);
+                preparedStatement.setInt(4, calories);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getHighestOrderID() {
+        int highestOrderID = -1; // Default value if no orders exist
+
+        try (Connection connection = DriverManager.getConnection(
+                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                            "csce315_970_03user",
+                            "fourfsd"
+                    )) {
+            String query = "SELECT MAX(orderid) FROM orders";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        highestOrderID = resultSet.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return highestOrderID;
+    }
     // Add methods to update the order list and total price
     // For example, you can have a method like addOrderItem(String item, double price) to add items to the order
 }

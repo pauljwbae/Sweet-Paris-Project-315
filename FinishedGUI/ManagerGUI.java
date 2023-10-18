@@ -55,15 +55,6 @@ public class ManagerGUI {
 
         menuPanel.add(button);
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                String userName = "John Doe"; // Replace with the actual username
-                new ManagerGUI(userName);
-            }
-        });
-    }
 }
 
 class SalesPanel extends JPanel {
