@@ -13,6 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * A JPanel that displays a table of sales data and allows the user to select a date range to view sales data for.
+ * The panel contains a JTable, JComboBoxes for selecting start and end dates, and a submit button to retrieve data for the selected date range.
+ * The sales data is fetched from a PostgreSQL database using JDBC and displayed in the table.
+ * The fetchDataFromDatabase method retrieves the sales data from the database and populates the table model with the data.
+ * The date selection and data retrieval logic is handled in the submitButton's ActionListener.
+ */
 public class Popularity extends JPanel {
     private JTable salesTable;
     private JButton submitButton;
@@ -25,6 +32,9 @@ public class Popularity extends JPanel {
     private Map<String, String> monthMap;
     
 
+    /**
+     * Constructs a new Popularity panel.
+     */
     public Popularity() {
         monthMap = new HashMap<>();
         monthMap.put("January", "01");
@@ -104,6 +114,12 @@ public class Popularity extends JPanel {
         add(dateSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Fetches sales data from the database and populates the given table model with the data.
+     * @param tableModel the table model to populate with sales data
+     * @param startDate the start date of the date range to retrieve sales data for
+     * @param endDate the end date of the date range to retrieve sales data for
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String startDate, String endDate) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -129,6 +145,10 @@ public class Popularity extends JPanel {
         }
     }
 
+    /**
+     * Returns an array of strings representing the days of the month.
+     * @return an array of strings representing the days of the month
+     */
     private String[] getDays() {
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -137,6 +157,10 @@ public class Popularity extends JPanel {
         return days;
     }
 
+    /**
+     * Returns an array of strings representing the months of the year.
+     * @return an array of strings representing the months of the year
+     */
     private String[] getMonths() {
         String[] months = {
                 "January", "February", "March", "April", "May", "June",
@@ -144,7 +168,12 @@ public class Popularity extends JPanel {
         };
         return months;
     }
+}
 
+    /**
+     * Returns an array of strings representing the years of 2022 and 2023.
+     * @return an array of strings representing the years of 2022 and 2023.
+     */
     private String[] getYears() {
         String[] years = new String[2];
         for (int i = 0; i < 2; i++) {

@@ -8,7 +8,10 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-
+/**
+ * The ExcessRep class functions as the gui, querying, and logic for the excess report query -- in which we had to return the items that sold less than 10% of its total inventory within a specified time.
+ * @author Simon Vadarahaj, Paul Bae
+ */
 public class ExcessRep extends JPanel {
     private JTable salesTable;
     private JButton submitButton;
@@ -16,7 +19,9 @@ public class ExcessRep extends JPanel {
     private JComboBox<String> startMonthComboBox;
     private JComboBox<String> startYearComboBox;
     
-
+    /**
+     * The constructor sets up a JTable -- to display the results of the query, a submission JButton -- to submit the query or refresh the table, and three JComboBox elements -- to enter the month, date, and year respectively.
+     */
     public ExcessRep() {
         // Create a new table model
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -72,6 +77,11 @@ public class ExcessRep extends JPanel {
         add(dateSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * fetchDataFromDatabase connects to the SQL database and selects all items from the items table that have less than < 10 sells within the given time period.
+     * @param tableModel the tableModel that will be modified and populated by the query.
+     * @param startDate A string that follows the XX-XX-XX XX:XX:XX format for datetime objects in SQL. This param specifies the time that the query will go back to.
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String startDate) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -97,6 +107,9 @@ public class ExcessRep extends JPanel {
         }
     }
 
+    /**
+     * getDays populates a string array from 1-31 and returns it.
+     */
     private String[] getDays() {
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -105,6 +118,9 @@ public class ExcessRep extends JPanel {
         return days;
     }
 
+    /**
+     * getMonths populates a string array with the names of months and returns it.
+     */
     private String[] getMonths() {
         String[] months = {
                 "January", "February", "March", "April", "May", "June",
@@ -113,6 +129,9 @@ public class ExcessRep extends JPanel {
         return months;
     }
 
+    /**
+     * getYears populates a string array with two years, 2022 and 2023 and returns it.
+     */
     private String[] getYears() {
         String[] years = new String[2];
         for (int i = 0; i < 2; i++) {

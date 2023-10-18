@@ -14,6 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * This class represents a JPanel that displays a table of orders and allows the user to edit the quantity of each item or delete an item from the order.
+ * The class also provides a method to add a new row to the table and a method to submit the order to a database.
+ * The table displays the item name and quantity, and the total price of the order is calculated based on the quantity of each item and its price in the database.
+ * The class uses a DefaultTableModel to manage the data in the table and a JScrollPane to display the table.
+ * The class also includes a JLabel to display the total price of the order and a JButton to submit the order to the database.
+ */
 class OrdersPanel extends JPanel {
     private DefaultTableModel orderTableModel;
     private JTable orderTable;
@@ -21,6 +28,14 @@ class OrdersPanel extends JPanel {
     private JLabel totalPriceLabel;
     private JButton submitButton;
 
+    /**
+     * This class represents a panel for displaying and editing orders.
+     * It contains a table for displaying order items, a label for displaying the total price,
+     * and a submit button for submitting the order.
+     * The table allows editing only for the "Quantity" column and double-clicking on a row in the table
+     * opens a dialog for deleting the row.
+     * The submit button inserts the order and its items into the database and clears the table.
+     */
     public OrdersPanel() {
         setLayout(new BorderLayout());
 
@@ -90,10 +105,21 @@ class OrdersPanel extends JPanel {
         add(submitButton, BorderLayout.SOUTH);
     }
 
+    /**
+     * Adds a new row to the order table model with the given item name and quantity.
+     * 
+     * @param itemName the name of the item to add to the order
+     * @param quantity the quantity of the item to add to the order
+     */
     public void addRow(String itemName, int quantity) {
         orderTableModel.addRow(new Object[]{itemName, quantity});
     }
 
+    /**
+     * Edits the quantity of an item in the order table.
+     * 
+     * @param row the row index of the item to be edited
+     */
     private void editRow(int row) {
         String itemName = (String) orderTableModel.getValueAt(row, 0);
         int currentQuantity = (int) orderTableModel.getValueAt(row, 1);
@@ -107,6 +133,12 @@ class OrdersPanel extends JPanel {
         }
     }
     
+    /**
+     * This method calculates the total price of the items in the order table model by querying the database for the price of each item.
+     * It constructs and executes a query for each row in the order table model and handles the query results as needed.
+     * The total price is returned as a double value.
+     * @return the total price of the items in the order table model
+     */
     private double getPrice() {
         double price = 0;
         try {
@@ -148,6 +180,14 @@ class OrdersPanel extends JPanel {
         return price;
     }
 
+    /**
+     * This method retrieves the total calories of the items in the order table model by querying a PostgreSQL database.
+     * It constructs and executes a query for each row in the order table model, retrieves the calories of the item from the
+     * database, and multiplies it by the quantity of the item in the order table model. The total calories of all items in the
+     * order table model is returned.
+     *
+     * @return the total calories of all items in the order table model
+     */
     private int getCals() {
         int calories = 0;
         try {
@@ -189,6 +229,11 @@ class OrdersPanel extends JPanel {
         return calories;
     }
 
+    /**
+     * Inserts the order items into the database and returns the total calories of the order.
+     * @param orderid the ID of the order to insert the items for
+     * @return the total calories of the order
+     */
     private int insertOrderItemsIntoDatabase(int orderid) {
         int calories = 0;
         try {
@@ -232,6 +277,13 @@ class OrdersPanel extends JPanel {
     }
     
     
+    /**
+     * Inserts an order into the database with the given customer ID, price, and calories.
+     *
+     * @param customerid the ID of the customer placing the order
+     * @param price the price of the order
+     * @param calories the number of calories in the order
+     */
     private void insertOrderIntoDatabase(int customerid, double price, int calories) {
         // Replace these values with your actual database connection details
         try (Connection connection = DriverManager.getConnection(
@@ -255,6 +307,12 @@ class OrdersPanel extends JPanel {
         }
     }
 
+    /**
+     * Returns the highest order ID from the orders table in the database.
+     * If no orders exist, returns -1.
+     *
+     * @return the highest order ID
+     */
     private int getHighestOrderID() {
         int highestOrderID = -1; // Default value if no orders exist
 
