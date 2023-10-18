@@ -9,38 +9,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * The Drink class functions as the menu of all menu items less than 900 calories that are served at Sweet Paris Cafe and Creperie.
- * @author Simon Vadarahaj
+ * Represents a panel for selecting low-calorie items (food and drinks).
  */
 public class LowCalorie extends JPanel {
     private OrdersPanel ordersPanel;
 
     /**
-     * The constructor sets up a grid and makes buttons along the grid for each drink item.
-     * @param ordersPanel The window onto which the grid is placed.
+     * Constructs a LowCalorie panel.
+     *
+     * @param ordersPanel The OrdersPanel for managing selected items.
      */
     public LowCalorie(OrdersPanel ordersPanel) {
         this.ordersPanel = ordersPanel;
         setLayout(new GridLayout(0, 3)); // 3 columns for buttons, adjust as needed
 
-        // Fetch item data from the database and create buttons
-        fetchItemsAndCreateButtons();
+        // Fetch low-calorie items from the database and create buttons
+        fetchLowCalorieItemsAndCreateButtons();
 
         int marginSize = 10; // Adjust the margin size as needed
         setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
     }
 
     /**
-     * fetchItemsAndCreateButtons connects to the SQL database and selects all items from the items table that are low-calorie.
-     * It then makes a button for each drink item to put onto the grid made in the constructor.
+     * Fetches low-calorie items from the database and creates buttons for each item.
      */
-    private void fetchItemsAndCreateButtons() {
+    private void fetchLowCalorieItemsAndCreateButtons() {
         try {
             Connection connection = DriverManager.getConnection(
-                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
-                            "csce315_970_03user",
-                            "fourfsd"
-                    );
+                    "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                    "csce315_970_03user",
+                    "fourfsd"
+            );
 
             String query = "SELECT name FROM items where calories < 900 and (food or drink)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -49,7 +48,7 @@ public class LowCalorie extends JPanel {
             while (resultSet.next()) {
                 String itemName = resultSet.getString("name");
                 JButton itemButton = new JButton(itemName);
-                
+
                 Insets margins = new Insets(10, 10, 10, 10); // Top, left, bottom, right margins
                 itemButton.setMargin(margins);
 
@@ -77,9 +76,10 @@ public class LowCalorie extends JPanel {
     }
 
     /**
-     * Whenever a low-calorie item button is pressed, askForQuantity is called to ask the user how many of the item selected are in the order.
-     * @param itemName The name of the low-calorie item selected.
-     * @return The number of the item ordered.
+     * Prompts the user to enter a quantity for the selected low-calorie item.
+     *
+     * @param itemName The name of the selected low-calorie item.
+     * @return The quantity entered by the user, or -1 if the input is invalid.
      */
     private int askForQuantity(String itemName) {
         String input = JOptionPane.showInputDialog("Enter quantity for " + itemName + ":");
@@ -90,5 +90,4 @@ public class LowCalorie extends JPanel {
             return -1;
         }
     }
-
 }

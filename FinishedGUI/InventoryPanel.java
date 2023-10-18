@@ -9,13 +9,19 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
-class InventoryPanel extends JPanel {
+/**
+ * This class represents the InventoryPanel for managing product inventory.
+ */
+public class InventoryPanel extends JPanel {
     private JTable inventoryTable;
     private JComboBox<String> productDropdown;
     private JTextField quantityField;
     private JButton updateButton;
     private JButton refresh;
 
+    /**
+     * Constructor for the InventoryPanel.
+     */
     public InventoryPanel() {
         // Create a new table model
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -65,8 +71,6 @@ class InventoryPanel extends JPanel {
                 // Use a PreparedStatement to prevent SQL injection
                 String updateQuery = "UPDATE inventory SET quantity = "+newQuantity+" FROM items WHERE items.name = '"+selectedProduct+"' AND items.itemid = inventory.itemid";
                 PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-                // preparedStatement.setInt(1, newQuantity);
-                // preparedStatement.setString(2, selectedProduct);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
@@ -99,8 +103,14 @@ class InventoryPanel extends JPanel {
         this.add(updateInventoryPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Fetches product data from the database and populates the table model.
+     *
+     * @param tableModel The table model to populate with product data.
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel) {
         try {
+            // Establish a database connection
             Connection connection = DriverManager.getConnection(
                             "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
                             "csce315_970_03user",
@@ -125,9 +135,12 @@ class InventoryPanel extends JPanel {
         }
     }
 
+    /**
+     * Populates the product dropdown with data from the database.
+     */
     private void populateProductDropdown() {
-        // Fetch product names from the database and populate the dropdown
         try {
+            // Establish a database connection
             Connection connection = DriverManager.getConnection(
                             "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
                             "csce315_970_03user",

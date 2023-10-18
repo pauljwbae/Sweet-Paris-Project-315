@@ -3,12 +3,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class represents the graphical user interface for the manager system.
+ */
 public class ManagerGUI {
     private JFrame mainFrame;
     private JPanel menuPanel;
     private JLabel welcomeLabel;
     private JPanel currentFrame;
 
+    /**
+     * Constructor for ManagerGUI.
+     *
+     * @param userName The username of the manager.
+     */
     public ManagerGUI(String userName) {
         mainFrame = new JFrame("Sweet Paris Manager System");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +48,12 @@ public class ManagerGUI {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * Helper method to add a button to the menu panel.
+     *
+     * @param buttonLabel The label for the button.
+     * @param targetPanel The panel to switch to when the button is clicked.
+     */
     private void addButton(String buttonLabel, final JPanel targetPanel) {
         JButton button = new JButton(buttonLabel);
         button.addActionListener(new ActionListener() {
@@ -57,18 +71,27 @@ public class ManagerGUI {
     }
 }
 
+/**
+ * Panel class representing the Sales panel.
+ */
 class SalesPanel extends JPanel {
     public SalesPanel() {
         // Add components specific to the Sales panel here
     }
 }
 
+/**
+ * Panel class representing the Reports panel.
+ */
 class ReportsPanel extends JPanel {
     public ReportsPanel() {
         // Add components specific to the Reports panel here
     }
 }
 
+/**
+ * Panel class representing the Settings panel.
+ */
 class SettingsPanel extends JPanel {
     public SettingsPanel() {
         // Add components specific to the Settings panel here

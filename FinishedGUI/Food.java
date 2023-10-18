@@ -9,38 +9,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * The Drink class functions as the menu of all food items served at Sweet Paris Cafe and Creperie.
- * @author Simon Vadarahaj
+ * Represents a panel for selecting food items.
  */
 public class Food extends JPanel {
     private OrdersPanel ordersPanel;
 
     /**
-     * The constructor sets up a grid and makes buttons along the grid for each food item.
-     * @param ordersPanel The window onto which the grid is placed.
+     * Constructs a Food panel.
+     *
+     * @param ordersPanel The OrdersPanel for managing selected items.
      */
     public Food(OrdersPanel ordersPanel) {
         this.ordersPanel = ordersPanel;
         setLayout(new GridLayout(0, 3)); // 3 columns for buttons, adjust as needed
 
-        // Fetch item data from the database and create buttons
-        fetchItemsAndCreateButtons();
+        // Fetch food item data from the database and create buttons
+        fetchFoodItemsAndCreateButtons();
 
         int marginSize = 10; // Adjust the margin size as needed
         setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
     }
 
     /**
-     * fetchItemsAndCreateButtons connects to the SQL database and selects all items from the items table that are food.
-     * It then makes a button for each food item to put onto the grid made in the constructor.
+     * Fetches food items from the database and creates buttons for each item.
      */
-    private void fetchItemsAndCreateButtons() {
+    private void fetchFoodItemsAndCreateButtons() {
         try {
             Connection connection = DriverManager.getConnection(
-                            "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
-                            "csce315_970_03user",
-                            "fourfsd"
-                    );
+                    "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315_970_03db",
+                    "csce315_970_03user",
+                    "fourfsd"
+            );
 
             String query = "SELECT name FROM items where food";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -49,7 +48,7 @@ public class Food extends JPanel {
             while (resultSet.next()) {
                 String itemName = resultSet.getString("name");
                 JButton itemButton = new JButton(itemName);
-                
+
                 Insets margins = new Insets(10, 10, 10, 10); // Top, left, bottom, right margins
                 itemButton.setMargin(margins);
 
@@ -77,9 +76,10 @@ public class Food extends JPanel {
     }
 
     /**
-     * Whenever a food button is pressed, askForQuantity is called to ask the user how many of the item selected are in the order.
-     * @param itemName The name of the food item selected.
-     * @return The number of the item ordered.
+     * Prompts the user to enter a quantity for the selected food item.
+     *
+     * @param itemName The name of the selected food item.
+     * @return The quantity entered by the user, or -1 if the input is invalid.
      */
     private int askForQuantity(String itemName) {
         String input = JOptionPane.showInputDialog("Enter quantity for " + itemName + ":");
@@ -90,5 +90,4 @@ public class Food extends JPanel {
             return -1;
         }
     }
-
 }
