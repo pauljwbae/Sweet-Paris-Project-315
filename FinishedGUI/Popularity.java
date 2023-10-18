@@ -12,7 +12,13 @@ import java.util.Vector;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * The `Popularity` class represents a JPanel for displaying popular products based on sales data.
+ * It provides the ability to select a date range and retrieve sales data within that range.
+ * 
+ * The class contains a JTable to display the product names and quantities sold, as well as
+ * components for selecting a date range and a "Submit" button to update the displayed data.
+ */
 public class Popularity extends JPanel {
     private JTable salesTable;
     private JButton submitButton;
@@ -24,7 +30,10 @@ public class Popularity extends JPanel {
     private JComboBox<String> endYearComboBox;
     private Map<String, String> monthMap;
     
-
+    /**
+     * Constructs a new `Popularity` panel with a JTable to display sales data and components
+     * for selecting a date range.
+     */
     public Popularity() {
         monthMap = new HashMap<>();
         monthMap.put("January", "01");
@@ -47,7 +56,7 @@ public class Popularity extends JPanel {
         tableModel.addColumn("Quantity Sold");
 
         // Fetch sales data from the database and populate the table (you can add your data retrieval logic here)
-        fetchDataFromDatabase(tableModel, "2001-1-1 00:00:00", "2222-1-1 00:00:00");
+        fetchDataFromDatabase(tableModel, "2001-1-1", "2222-1-1");
 
         // Create the table with the model
         salesTable = new JTable(tableModel);
@@ -104,6 +113,14 @@ public class Popularity extends JPanel {
         add(dateSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Fetches sales data from the database and populates the JTable with the retrieved data
+     * based on the specified date range.
+     *
+     * @param tableModel The DefaultTableModel to populate with sales data.
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String startDate, String endDate) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -129,6 +146,11 @@ public class Popularity extends JPanel {
         }
     }
 
+    /**
+     * Retrieves an array of day values (1-31) as strings.
+     *
+     * @return An array of day values.
+     */
     private String[] getDays() {
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -137,6 +159,11 @@ public class Popularity extends JPanel {
         return days;
     }
 
+    /**
+     * Retrieves an array of month names.
+     *
+     * @return An array of month names.
+     */
     private String[] getMonths() {
         String[] months = {
                 "January", "February", "March", "April", "May", "June",
@@ -145,6 +172,11 @@ public class Popularity extends JPanel {
         return months;
     }
 
+    /**
+     * Retrieves an array of year values for a limited range as strings.
+     *
+     * @return An array of year values.
+     */
     private String[] getYears() {
         String[] years = new String[2];
         for (int i = 0; i < 2; i++) {
