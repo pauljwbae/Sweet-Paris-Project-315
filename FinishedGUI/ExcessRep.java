@@ -90,7 +90,7 @@ public class ExcessRep extends JPanel {
                             "fourfsd"
                     );
             Statement stmt = connection.createStatement();
-            String query = "SELECT orderitems.item_name, SUM(orderitems.quantity) AS total_sold FROM orders  INNER JOIN orderitems ON orders.orderid = orderitems.order_id where orders.orderdatetime between '"+startDate+" 00:00:00' and 2023-10-17  GROUP BY orderitems.item_name having SUM(orderitems.quantity) < 10 order by total_sold asc";
+            String query = "SELECT orderitems.item_name, SUM(orderitems.quantity) AS total_sold FROM orders  INNER JOIN orderitems ON orders.orderid = orderitems.order_id where orders.orderdatetime between '"+startDate+" 00:00:00' and '2023-05-25 23:59:59' GROUP BY orderitems.item_name having sum(orderitems.quantity) < 10 order by total_sold asc";
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {

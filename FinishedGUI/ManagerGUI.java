@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 /**
- * This class represents the graphical user interface for the manager system.
+ * The `ManagerGUI` class represents a graphical user interface for the manager's dashboard of the Sweet Paris
+ * management system. It provides access to various functionality and reports related to the management of the
+ * business.
  */
 public class ManagerGUI {
     private JFrame mainFrame;
@@ -13,9 +14,9 @@ public class ManagerGUI {
     private JPanel currentFrame;
 
     /**
-     * Constructor for ManagerGUI.
+     * Constructs a new manager GUI with the specified user name.
      *
-     * @param userName The username of the manager.
+     * @param userName The user name of the manager.
      */
     public ManagerGUI(String userName) {
         mainFrame = new JFrame("Sweet Paris Manager System");
@@ -31,12 +32,12 @@ public class ManagerGUI {
 
         // Add buttons to the menu panel
         addButton("Inventory", new InventoryPanel()); 
-        addButton("Sales Report", new SalesPanel());
+        addButton("Sales Report", new SalesRep());
         addButton("Excess Report", new ExcessRep());
-        addButton("Product Usage Chart", new ReportsPanel());
+        addButton("Product Usage Chart", new ProdUseChart());
         addButton("Restock Report", new RestockRep());
         addButton("Update Items", new NewSeasonal());
-        addButton("Ordering Trend Report", new SettingsPanel());
+        addButton("Ordering Trend Report", new Together());
         addButton("Popularity Analysis", new Popularity());
 
         mainFrame.add(menuPanel, BorderLayout.WEST);
@@ -49,10 +50,10 @@ public class ManagerGUI {
     }
 
     /**
-     * Helper method to add a button to the menu panel.
+     * Adds a button to the menu panel that, when clicked, switches the display to the specified target panel.
      *
-     * @param buttonLabel The label for the button.
-     * @param targetPanel The panel to switch to when the button is clicked.
+     * @param buttonLabel  The label text for the button.
+     * @param targetPanel  The panel to display when the button is clicked.
      */
     private void addButton(String buttonLabel, final JPanel targetPanel) {
         JButton button = new JButton(buttonLabel);
@@ -68,32 +69,5 @@ public class ManagerGUI {
         });
 
         menuPanel.add(button);
-    }
-}
-
-/**
- * Panel class representing the Sales panel.
- */
-class SalesPanel extends JPanel {
-    public SalesPanel() {
-        // Add components specific to the Sales panel here
-    }
-}
-
-/**
- * Panel class representing the Reports panel.
- */
-class ReportsPanel extends JPanel {
-    public ReportsPanel() {
-        // Add components specific to the Reports panel here
-    }
-}
-
-/**
- * Panel class representing the Settings panel.
- */
-class SettingsPanel extends JPanel {
-    public SettingsPanel() {
-        // Add components specific to the Settings panel here
     }
 }
