@@ -84,6 +84,26 @@ public class LoginApp extends JFrame {
             }
         });
 
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(new ActionListener() {
+            /**
+             * Handles the logout button click event.
+             *
+             * @param e The action event.
+             */
+            public void actionPerformed(ActionEvent e) {
+                // Clear user data or perform any necessary logout actions here.
+                idField.setText("");
+                passwordField.setText("");
+                
+                // Create a new instance of LoginApp to return to the main login screen
+                new LoginApp();
+                
+                // Close the current window
+                dispose();
+            }
+        });
+
         loginPanel.add(idLabel);
         loginPanel.add(idField);
         loginPanel.add(passwordLabel);
