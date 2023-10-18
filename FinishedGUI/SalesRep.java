@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+ * This class, given a time window, will display the sales by item from the order history.
+ */
 public class SalesRep extends JPanel {
     private JTable orderItemsTable;
     private JButton submitButton;
@@ -18,6 +21,9 @@ public class SalesRep extends JPanel {
     private JComboBox<String> endMonthComboBox;
     private JComboBox<String> endYearComboBox;
 
+    /**
+     * Constructs a new SalesRep panel with a JTable of order items and a date selection panel.
+     */
     public SalesRep() {
         setLayout(new BorderLayout());
 
@@ -82,6 +88,13 @@ public class SalesRep extends JPanel {
         add(dateSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Fetches data from the database and populates the given table model with the results.
+     *
+     * @param tableModel the table model to populate with data
+     * @param start the start date of the date range to filter by
+     * @param end the end date of the date range to filter by
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String start, String end) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -111,6 +124,11 @@ public class SalesRep extends JPanel {
         }
     }
 
+    /**
+     * Returns an array of strings representing the days of the month.
+     *
+     * @return an array of strings representing the days of the month
+     */
     private String[] getDays() {
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -119,6 +137,11 @@ public class SalesRep extends JPanel {
         return days;
     }
 
+    /**
+     * Returns an array of strings representing the months of the year.
+     *
+     * @return an array of strings representing the months of the year
+     */
     private String[] getMonths() {
         String[] months = {
                 "January", "February", "March", "April", "May", "June",
@@ -127,6 +150,11 @@ public class SalesRep extends JPanel {
         return months;
     }
 
+    /**
+     * Returns an array of strings representing the years.
+     *
+     * @return an array of strings representing the years
+     */
     private String[] getYears() {
         String[] years = new String[2];
         for (int i = 0; i < 2; i++) {

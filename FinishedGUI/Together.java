@@ -8,6 +8,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+/**
+     * This class displays a list of pairs of menu items that sell together often (popular or not), sorted by most frequent, based on a given date and time. 
+     */
 public class Together extends JPanel {
     private JTable orderItemsTable;
     private JButton submitButton;
@@ -18,6 +21,13 @@ public class Together extends JPanel {
     private JComboBox<String> endMonthComboBox;
     private JComboBox<String> endYearComboBox;
 
+    /**
+     * This class creates a GUI with a JTable that displays data fetched from a database based on a date range selected by the user.
+     * The table has columns for Item 1, Item 2, and Number of Pairs, and can be modified to include additional columns as needed.
+     * The user selects the date range using JComboBoxes for day, month, and year, and clicks the Submit button to retrieve the data.
+     * The selected date range is displayed in a JOptionPane for demonstration purposes.
+     * The fetchDataFromDatabase() method is called to retrieve the data from the database and populate the table.
+     */
     public Together() {
         setLayout(new BorderLayout());
 
@@ -82,6 +92,13 @@ public class Together extends JPanel {
         add(dateSelectionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Fetches data from a PostgreSQL database and populates a given table model with the results.
+     * 
+     * @param tableModel The table model to populate with the results.
+     * @param start The start date to filter the results by.
+     * @param end The end date to filter the results by.
+     */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String start, String end) {
         try {
             Connection connection = DriverManager.getConnection(
@@ -111,6 +128,12 @@ public class Together extends JPanel {
         }
     }
 
+    /**
+     * Returns an array of strings representing the days of the month.
+     * The array contains 31 elements, each element representing a day of the month as a string.
+     *
+     * @return an array of strings representing the days of the month.
+     */
     private String[] getDays() {
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -119,6 +142,11 @@ public class Together extends JPanel {
         return days;
     }
 
+    /**
+     * Returns an array of month names.
+     *
+     * @return an array of month names
+     */
     private String[] getMonths() {
         String[] months = {
                 "January", "February", "March", "April", "May", "June",
@@ -127,6 +155,10 @@ public class Together extends JPanel {
         return months;
     }
 
+    /**
+     * Returns an array of two years starting from the current year.
+     * @return an array of two years as strings
+     */
     private String[] getYears() {
         String[] years = new String[2];
         for (int i = 0; i < 2; i++) {

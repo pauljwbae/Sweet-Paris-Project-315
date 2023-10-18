@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 /**
- * The ExcessRep class functions as the gui, querying, and logic for the excess report query -- in which we had to return the items that sold less than 10% of its total inventory within a specified time.
+ * The ExcessRep class returns the items that sold less than 10% of its total inventory within a specified time.
  * @author Simon Vadarahaj, Paul Bae
  */
 public class ExcessRep extends JPanel {

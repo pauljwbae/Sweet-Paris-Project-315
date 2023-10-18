@@ -12,11 +12,7 @@ import java.util.Vector;
 
 
 /**
- * This class represents a JPanel that displays a JTable of items fetched from a database.
- * It also provides buttons to update the price of an item, add a new item, and delete an item.
- * The table can be refreshed to display the latest data from the database.
- * The class fetches data from a PostgreSQL database using JDBC driver.
- * The class uses DefaultTableModel to populate the JTable with data.
+ * This class allows the Vendor to add items into the database system.
  */
 public class NewSeasonal extends JPanel {
     private JTable itemsTable;

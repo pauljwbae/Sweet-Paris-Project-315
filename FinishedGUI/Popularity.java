@@ -14,11 +14,7 @@ import java.util.Map;
 
 
 /**
- * A JPanel that displays a table of sales data and allows the user to select a date range to view sales data for.
- * The panel contains a JTable, JComboBoxes for selecting start and end dates, and a submit button to retrieve data for the selected date range.
- * The sales data is fetched from a PostgreSQL database using JDBC and displayed in the table.
- * The fetchDataFromDatabase method retrieves the sales data from the database and populates the table model with the data.
- * The date selection and data retrieval logic is handled in the submitButton's ActionListener.
+ * This class, given a time window, will display a statistic based on the popularity of a given number of menu items in descending order.
  */
 public class Popularity extends JPanel {
     private JTable salesTable;
@@ -31,9 +27,9 @@ public class Popularity extends JPanel {
     private JComboBox<String> endYearComboBox;
     private Map<String, String> monthMap;
     
-
     /**
-     * Constructs a new Popularity panel.
+     * Constructs a new `Popularity` panel with a JTable to display sales data and components
+     * for selecting a date range.
      */
     public Popularity() {
         monthMap = new HashMap<>();
@@ -57,7 +53,7 @@ public class Popularity extends JPanel {
         tableModel.addColumn("Quantity Sold");
 
         // Fetch sales data from the database and populate the table (you can add your data retrieval logic here)
-        fetchDataFromDatabase(tableModel, "2001-1-1 00:00:00", "2222-1-1 00:00:00");
+        fetchDataFromDatabase(tableModel, "2001-1-1", "2222-1-1");
 
         // Create the table with the model
         salesTable = new JTable(tableModel);
@@ -115,10 +111,12 @@ public class Popularity extends JPanel {
     }
 
     /**
-     * Fetches sales data from the database and populates the given table model with the data.
-     * @param tableModel the table model to populate with sales data
-     * @param startDate the start date of the date range to retrieve sales data for
-     * @param endDate the end date of the date range to retrieve sales data for
+     * Fetches sales data from the database and populates the JTable with the retrieved data
+     * based on the specified date range.
+     *
+     * @param tableModel The DefaultTableModel to populate with sales data.
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
      */
     private void fetchDataFromDatabase(DefaultTableModel tableModel, String startDate, String endDate) {
         try {
@@ -146,8 +144,9 @@ public class Popularity extends JPanel {
     }
 
     /**
-     * Returns an array of strings representing the days of the month.
-     * @return an array of strings representing the days of the month
+     * Retrieves an array of day values (1-31) as strings.
+     *
+     * @return An array of day values.
      */
     private String[] getDays() {
         String[] days = new String[31];
@@ -158,8 +157,9 @@ public class Popularity extends JPanel {
     }
 
     /**
-     * Returns an array of strings representing the months of the year.
-     * @return an array of strings representing the months of the year
+     * Retrieves an array of month names.
+     *
+     * @return An array of month names.
      */
     private String[] getMonths() {
         String[] months = {
@@ -169,10 +169,10 @@ public class Popularity extends JPanel {
         return months;
     }
 
-
     /**
-     * Returns an array of strings representing the years of 2022 and 2023.
-     * @return an array of strings representing the years of 2022 and 2023.
+     * Retrieves an array of year values for a limited range as strings.
+     *
+     * @return An array of year values.
      */
     private String[] getYears() {
         String[] years = new String[2];
