@@ -3,10 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 /**
- * The CashierGUI class functions as the interface through which a cashier would navigate the menu and create orders at Sweet Paris Cafe and Creperie.
- * @author Simon Vadarahaj
+ * Represents the graphical user interface for the cashier system.
  */
 public class CashierGUI {
     private JFrame mainFrame;
@@ -16,10 +14,10 @@ public class CashierGUI {
     private JPanel currentFrame;
 
     /**
-     * The CashierGUI constructor creates a window and creates a panel for the menu as well as four buttons to flip between different pages of the menu.
-     * @param userName The name of the employee that is signed in to the system currently
+     * Constructs the CashierGUI.
+     *
+     * @param userName The name of the cashier.
      */
-
     public CashierGUI(String userName) {
         mainFrame = new JFrame("Sweet Paris Cashier System");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,16 +43,15 @@ public class CashierGUI {
 
         currentFrame = new JPanel();
         mainFrame.add(currentFrame, BorderLayout.CENTER);
-        // Create and add the OrdersPanel on the right side
-        
 
         mainFrame.setVisible(true);
     }
 
     /**
-     * addButton creates a button and puts it onto a JPanel.
-     * @param buttonLabel The name the button is given, and the name displayed on the button
-     * @param targetPanel The panel the button is added to
+     * Adds a button to the menu panel that switches the display to the target panel.
+     *
+     * @param buttonLabel  The label of the button.
+     * @param targetPanel  The panel to be displayed when the button is clicked.
      */
     private void addButton(String buttonLabel, final JPanel targetPanel) {
         JButton button = new JButton(buttonLabel);
@@ -71,7 +68,4 @@ public class CashierGUI {
 
         menuPanel.add(button);
     }
-
 }
-
-// Define OrdersPanel to display orders on the right side
