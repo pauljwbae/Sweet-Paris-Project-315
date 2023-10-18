@@ -168,7 +168,7 @@ public class Popularity extends JPanel {
         };
         return months;
     }
-}
+
 
     /**
      * Returns an array of strings representing the years of 2022 and 2023.
