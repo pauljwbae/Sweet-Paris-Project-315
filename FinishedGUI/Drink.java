@@ -8,9 +8,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The Drink class functions as the menu of all drinks served at Sweet Paris Cafe and Creperie.
+ * @author Simon Vadarahaj
+ */
+
 public class Drink extends JPanel {
     private OrdersPanel ordersPanel;
 
+    /**
+     * The constructor sets up a grid and makes buttons along the grid for each drink item.
+     * @param ordersPanel The window onto which the grid is placed.
+     */
     public Drink(OrdersPanel ordersPanel) {
         this.ordersPanel = ordersPanel;
         setLayout(new GridLayout(0, 3)); // 3 columns for buttons, adjust as needed
@@ -21,7 +30,10 @@ public class Drink extends JPanel {
         int marginSize = 10; // Adjust the margin size as needed
         setBorder(BorderFactory.createEmptyBorder(marginSize, marginSize, marginSize, marginSize));
     }
-
+    /**
+     * fetchItemsAndCreateButtons connects to the SQL database and selects all items from the items table that are drinks.
+     * It then makes a button for each drink item to put onto the grid made in the constructor.
+     */
     private void fetchItemsAndCreateButtons() {
         try {
             Connection connection = DriverManager.getConnection(
@@ -63,6 +75,12 @@ public class Drink extends JPanel {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Whenever a drink button is pressed, askForQuantity is called to ask the user how many of the item selected are in the order.
+     * @param itemName The name of the drink item selected.
+     * @return The number of the item ordered.
+     */
 
     private int askForQuantity(String itemName) {
         String input = JOptionPane.showInputDialog("Enter quantity for " + itemName + ":");

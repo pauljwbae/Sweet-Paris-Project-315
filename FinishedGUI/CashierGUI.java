@@ -3,12 +3,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * The CashierGUI class functions as the interface through which a cashier would navigate the menu and create orders at Sweet Paris Cafe and Creperie.
+ * @author Simon Vadarahaj
+ */
 public class CashierGUI {
     private JFrame mainFrame;
     private JPanel menuPanel;
     private JLabel welcomeLabel;
     private OrdersPanel ordersPanel;
     private JPanel currentFrame;
+
+    /**
+     * The CashierGUI constructor creates a window and creates a panel for the menu as well as four buttons to flip between different pages of the menu.
+     * @param userName The name of the employee that is signed in to the system currently
+     */
 
     public CashierGUI(String userName) {
         mainFrame = new JFrame("Sweet Paris Cashier System");
@@ -41,6 +51,11 @@ public class CashierGUI {
         mainFrame.setVisible(true);
     }
 
+    /**
+     * addButton creates a button and puts it onto a JPanel.
+     * @param buttonLabel The name the button is given, and the name displayed on the button
+     * @param targetPanel The panel the button is added to
+     */
     private void addButton(String buttonLabel, final JPanel targetPanel) {
         JButton button = new JButton(buttonLabel);
         button.addActionListener(new ActionListener() {
