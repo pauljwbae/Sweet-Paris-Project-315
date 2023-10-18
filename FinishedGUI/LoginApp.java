@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +30,7 @@ public class LoginApp extends JFrame {
         JLabel welcomeLabel = new JLabel("Welcome to SWEET PARIS POS");
         welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        welcomeLabel.setBorder(new EmptyBorder(20, 15, 30,15));
+        welcomeLabel.setBorder(new EmptyBorder(20, 15, 30, 15));
 
         JPanel loginPanel = new JPanel(new GridLayout(3, 2));
 
@@ -46,6 +45,7 @@ public class LoginApp extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             /**
              * Handles the login button click event.
+             *
              * @param e The action event.
              */
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +63,6 @@ public class LoginApp extends JFrame {
                     ResultSet resultSet = statement.executeQuery();
 
                     if (resultSet.next()) {
-                        // System.out.print(resultSet.getString(2));
                         if ("manager".equals(resultSet.getString(1))) {
                             dispose();
                             doManager(resultSet.getString(2));
@@ -101,6 +100,7 @@ public class LoginApp extends JFrame {
 
     /**
      * Create and open the Cashier GUI.
+     *
      * @param name The name of the user.
      */
     private void doCashier(String name) {
@@ -109,6 +109,7 @@ public class LoginApp extends JFrame {
 
     /**
      * Create and open the Manager GUI.
+     *
      * @param name The name of the user.
      */
     private void doManager(String name) {
@@ -117,6 +118,7 @@ public class LoginApp extends JFrame {
 
     /**
      * The main entry point of the application.
+     *
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
