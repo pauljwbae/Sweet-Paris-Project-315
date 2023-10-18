@@ -54,7 +54,7 @@ public class ProdUseChart extends JPanel {
         tableModel.addColumn("Quantity Sold");
 
         // Fetch sales data from the database and populate the table (you can add your data retrieval logic here)
-        fetchDataFromDatabase(tableModel, "2001-1-1", "2222-1-1");
+        fetchDataFromDatabase(tableModel, "2001-1-1 00:00:00", "2222-1-1 00:00:00");
 
         // Create the table with the model
         salesTable = new JTable(tableModel);
@@ -130,8 +130,8 @@ public class ProdUseChart extends JPanel {
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
-                String productName = rs.getString("item_name");
-                int quantitySold = rs.getInt("total_sold");
+                String productName = rs.getString("order_id");
+                int quantitySold = rs.getInt("total_inventory");
                 tableModel.addRow(new Object[]{productName, quantitySold});
             }
 
