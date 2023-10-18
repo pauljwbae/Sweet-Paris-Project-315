@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 /**
  * This class represents a JPanel that displays a table of orders and allows the user to edit the quantity of each item or delete an item from the order.
@@ -43,6 +44,7 @@ class OrdersPanel extends JPanel {
         orderTableModel = new DefaultTableModel();
         orderTableModel.addColumn("Item");
         orderTableModel.addColumn("Quantity");
+        //orderTableModel.addColumn("Price"); 
 
         orderTable = new JTable(orderTableModel) {
             @Override
@@ -87,7 +89,7 @@ class OrdersPanel extends JPanel {
 
         // Create a label for displaying the total price
         totalPriceLabel = new JLabel("Total Price: $0.00");
-        add(totalPriceLabel, BorderLayout.SOUTH);
+        add(totalPriceLabel, BorderLayout.NORTH);
 
         // Create a submit button
         submitButton = new JButton("Submit Order");
@@ -100,6 +102,8 @@ class OrdersPanel extends JPanel {
                 insertOrderIntoDatabase(11111, price, calories);
                 insertOrderItemsIntoDatabase(getHighestOrderID());
                 orderTableModel.setRowCount(0); 
+
+                JOptionPane.showMessageDialog(OrdersPanel.this, "Total Price: $" + String.format("%.2f", price), "Order Summary", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         add(submitButton, BorderLayout.SOUTH);
@@ -113,6 +117,7 @@ class OrdersPanel extends JPanel {
      */
     public void addRow(String itemName, int quantity) {
         orderTableModel.addRow(new Object[]{itemName, quantity});
+        updateTotalPrice();
     }
 
     /**
@@ -131,6 +136,8 @@ class OrdersPanel extends JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a number.");
         }
+
+        updateTotalPrice();
     }
     
     /**
@@ -180,6 +187,13 @@ class OrdersPanel extends JPanel {
         return price;
     }
 
+    // /**
+    //  * Updates the "Total Price" label based on the current items in the order.
+    //  */
+    public void updateTotalPrice() {
+        double total = getPrice();
+        totalPriceLabel.setText("Total Price: $" + String.format("%.2f", total));
+    }
     /**
      * This method retrieves the total calories of the items in the order table model by querying a PostgreSQL database.
      * It constructs and executes a query for each row in the order table model, retrieves the calories of the item from the
