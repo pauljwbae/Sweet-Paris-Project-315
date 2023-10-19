@@ -69,3 +69,5 @@ public class CashierGUI {
         menuPanel.add(button);
     }
 }
+
+
