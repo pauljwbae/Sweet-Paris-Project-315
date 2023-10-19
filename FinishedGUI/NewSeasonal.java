@@ -33,6 +33,18 @@ public class NewSeasonal extends JPanel {
         // Set column names
         tableModel.addColumn("Name");
         tableModel.addColumn("Contains Wheat");
+        tableModel.addColumn("Contains Lemon");
+        tableModel.addColumn("Contains Pork");
+        tableModel.addColumn("Contains Oreo");
+        tableModel.addColumn("Contains Nutella");
+        tableModel.addColumn("Contains Chicken");
+        tableModel.addColumn("Contains Creme");
+        tableModel.addColumn("Contains Butter");
+        tableModel.addColumn("Contains Sugar");
+        tableModel.addColumn("Contains Orange");
+        tableModel.addColumn("Contains Apple");
+        tableModel.addColumn("Contains Caffeine");
+        tableModel.addColumn("Contains Chocolate");
         tableModel.addColumn("Contains Milk");
         tableModel.addColumn("Contains Eggs");
         tableModel.addColumn("Contains Alcohol");
@@ -95,6 +107,18 @@ public class NewSeasonal extends JPanel {
                 tableModel.addRow(new Object[]{
                     rs.getString("name"),
                     rs.getBoolean("containswheat"),
+                    rs.getBoolean("containslemon"),
+                    rs.getBoolean("containspork"),
+                    rs.getBoolean("containsoreo"),
+                    rs.getBoolean("containsnutella"),
+                    rs.getBoolean("containschicken"),
+                    rs.getBoolean("containscreme"),
+                    rs.getBoolean("containsbutter"),
+                    rs.getBoolean("containssugar"),
+                    rs.getBoolean("containsorange"),
+                    rs.getBoolean("containsapple"),
+                    rs.getBoolean("containscaffeine"),
+                    rs.getBoolean("containschocolate"),
                     rs.getBoolean("containsmilk"),
                     rs.getBoolean("containseggs"),
                     rs.getBoolean("containsalcohol"),
@@ -260,6 +284,18 @@ public class NewSeasonal extends JPanel {
         addItemPanel.setLayout(boxLayout);
         JTextField nameField = new JTextField(20);
         JCheckBox wheatCheckBox = new JCheckBox("Contains Wheat");
+        JCheckBox lemonCheckBox = new JCheckBox("Contains Lemon");
+        JCheckBox porkCheckBox = new JCheckBox("Contains Pork");
+        JCheckBox oreoCheckBox = new JCheckBox("Contains Oreo");
+        JCheckBox nutellaCheckBox = new JCheckBox("Contains Nutella");
+        JCheckBox chickenCheckBox = new JCheckBox("Contains Chicken");
+        JCheckBox cremeCheckBox = new JCheckBox("Contains Creme");
+        JCheckBox butterCheckBox = new JCheckBox("Contains Butter");
+        JCheckBox sugarCheckBox = new JCheckBox("Contains Sugar");
+        JCheckBox orangeCheckBox = new JCheckBox("Contains Orange");
+        JCheckBox appleCheckBox = new JCheckBox("Contains Apple");
+        JCheckBox caffeineCheckBox = new JCheckBox("Contains Caffeine");
+        JCheckBox chocolateCheckBox = new JCheckBox("Contains Chocolate");
         JCheckBox milkCheckBox = new JCheckBox("Contains Milk");
         JCheckBox eggsCheckBox = new JCheckBox("Contains Eggs");
         JCheckBox alcoholCheckBox = new JCheckBox("Contains Alcohol");
@@ -272,6 +308,30 @@ public class NewSeasonal extends JPanel {
         addItemPanel.add(nameField);
         addItemPanel.add(new JLabel("Contains Wheat:"));
         addItemPanel.add(wheatCheckBox);
+        addItemPanel.add(new JLabel("Contains Lemon:"));
+        addItemPanel.add(lemonCheckBox);
+        addItemPanel.add(new JLabel("Contains Pork:"));
+        addItemPanel.add(porkCheckBox);
+        addItemPanel.add(new JLabel("Contains Oreo:"));
+        addItemPanel.add(oreoCheckBox);
+        addItemPanel.add(new JLabel("Contains Nutella:"));
+        addItemPanel.add(nutellaCheckBox);
+        addItemPanel.add(new JLabel("Contains Chicken:"));
+        addItemPanel.add(chickenCheckBox);
+        addItemPanel.add(new JLabel("Contains Creme:"));
+        addItemPanel.add(cremeCheckBox);
+        addItemPanel.add(new JLabel("Contains Butter:"));
+        addItemPanel.add(butterCheckBox);
+        addItemPanel.add(new JLabel("Contains Sugar:"));
+        addItemPanel.add(sugarCheckBox);
+        addItemPanel.add(new JLabel("Contains Orange:"));
+        addItemPanel.add(orangeCheckBox);
+        addItemPanel.add(new JLabel("Contains Apple:"));
+        addItemPanel.add(appleCheckBox);
+        addItemPanel.add(new JLabel("Contains Caffeine:"));
+        addItemPanel.add(caffeineCheckBox);
+        addItemPanel.add(new JLabel("Contains Chocolate:"));
+        addItemPanel.add(chocolateCheckBox);
         addItemPanel.add(new JLabel("Contains Milk:"));
         addItemPanel.add(milkCheckBox);
         addItemPanel.add(new JLabel("Contains Eggs:"));
@@ -299,6 +359,18 @@ public class NewSeasonal extends JPanel {
             // Retrieve values from the input fields and checkboxes
             String name = nameField.getText();
             boolean containsWheat = wheatCheckBox.isSelected();
+            boolean containslemon = lemonCheckBox.isSelected();
+            boolean containspork = porkCheckBox.isSelected();
+            boolean containsoreo = oreoCheckBox.isSelected();
+            boolean containsnutella = nutellaCheckBox.isSelected();
+            boolean containschicken = chickenCheckBox.isSelected();
+            boolean containscreme = cremeCheckBox.isSelected();
+            boolean containsbutter = butterCheckBox.isSelected();
+            boolean containssugar = sugarCheckBox.isSelected();
+            boolean containsorange = orangeCheckBox.isSelected();
+            boolean containsapple = appleCheckBox.isSelected();
+            boolean containscaffeine = caffeineCheckBox.isSelected();
+            boolean containschocolate = chocolateCheckBox.isSelected();
             boolean containsMilk = milkCheckBox.isSelected();
             boolean containsEggs = eggsCheckBox.isSelected();
             boolean containsAlcohol = alcoholCheckBox.isSelected();
